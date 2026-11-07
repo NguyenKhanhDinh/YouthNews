@@ -1,6 +1,7 @@
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from './components/header/Header'
+import Footer from './components/footer/Footer'
 import EducationPage from './pages/EducationPage'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
 
 function App() {
@@ -8,7 +9,10 @@ function App() {
         <div className="app">
             <Header />
             <main className="app__main">
-                <EducationPage />
+                <Routes>
+                    <Route path="/" element={<EducationPage />} />
+                    <Route path="*" element={<EducationPage />} />
+                </Routes>
             </main>
             <Footer />
         </div>
