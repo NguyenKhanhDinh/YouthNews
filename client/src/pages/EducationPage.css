@@ -1,0 +1,107 @@
+.education-page {
+    padding: 28px 24px;
+    color: var(--yn-text);
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.education-page__container {
+    width: min(1120px, 100%);
+    margin: 0 auto;
+}
+
+.education-page a {
+    text-decoration: none;
+}
+
+.education-page a:hover {
+    color: var(--yn-primary);
+}
+
+.education-page__breadcrumb {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    margin-bottom: 20px;
+    color: var(--yn-muted);
+    font-size: 13px;
+}
+
+.education-page__breadcrumb span:last-child {
+    color: var(--yn-primary);
+    font-weight: 700;
+}
+
+.education-page__heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 20px;
+}
+
+.education-page__eyebrow {
+    margin: 0 0 6px;
+    color: var(--yn-primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.education-page__heading h1 {
+    margin: 0;
+    color: var(--yn-text);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(32px, 4vw, 42px);
+    line-height: 1.1;
+}
+
+.education-page__intro {
+    max-width: 380px;
+    margin: 0 0 3px;
+    color: var(--yn-muted);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.education-topics {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px 0;
+    border-top: 1px solid var(--yn-border);
+    border-bottom: 1px solid var(--yn-border);
+    scrollbar-width: thin;
+}
+
+.education-topics a {
+    flex: 0 0 auto;
+    padding: 8px 13px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--yn-muted);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.education-topics a:hover,
+.education-topics a.is-selected {
+    border-color: var(--yn-primary);
+    color: var(--yn-primary);
+    background: var(--yn-hover);
+}
+
+@media (max-width: 760px) {
+    .education-page {
+        padding: 22px 16px;
+    }
+
+    .education-page__heading {
+        display: block;
+    }
+
+    .education-page__intro {
+        margin-top: 10px;
+    }
+}
