@@ -11,6 +11,14 @@ const topics = [
     'Cẩm nang tuyển sinh 2026',
 ]
 
+const featuredStory = {
+    category: 'Tuyển sinh',
+    title: 'Nhiều trường đại học công bố phương án tuyển sinh, thí sinh cần lưu ý gì?',
+    summary: 'Cập nhật những thông tin đáng chú ý dành cho học sinh và phụ huynh trong mùa tuyển sinh.',
+    image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=85',
+    imageAlt: 'Sinh viên trong lễ tốt nghiệp',
+}
+
 export default function EducationPage() {
     return (
         <div className="education-page">
@@ -38,6 +46,20 @@ export default function EducationPage() {
                         </a>
                     ))}
                 </nav>
+
+                <article className="education-featured">
+                    <Link className="education-featured__image" to="/chuyen-muc/giao-duc">
+                        <img src={featuredStory.image} alt={featuredStory.imageAlt} />
+                    </Link>
+                    <div className="education-featured__content">
+                        <span className="education-label">{featuredStory.category}</span>
+                        <h2>
+                            <Link to="/chuyen-muc/giao-duc">{featuredStory.title}</Link>
+                        </h2>
+                        <p>{featuredStory.summary}</p>
+                        <span className="education-meta">Tin mới · 5 phút đọc</span>
+                    </div>
+                </article>
             </div>
         </div>
     )
