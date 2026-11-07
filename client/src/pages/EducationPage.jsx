@@ -54,6 +54,12 @@ const latestStories = [
     },
 ]
 
+const popularStories = [
+    'Cách chọn ngành học phù hợp với năng lực và sở thích',
+    'Những mốc thời gian quan trọng trong mùa tuyển sinh',
+    'Học sinh cần chuẩn bị gì cho kỳ thi tốt nghiệp?',
+]
+
 export default function EducationPage() {
     return (
         <div className="education-page">
@@ -113,30 +119,45 @@ export default function EducationPage() {
                     ))}
                 </section>
 
-                <section className="education-latest" id="tin-moi" aria-labelledby="latest-title">
-                    <div className="education-section-heading">
-                        <h2 id="latest-title">Tin mới</h2>
-                        <a href="#tin-moi">Xem tất cả</a>
-                    </div>
-                    {latestStories.map((story) => (
-                        <article className="education-latest__item" key={story.title}>
-                            <div>
-                                <span className="education-label">{story.category}</span>
-                                <h3>
-                                    <Link to="/chuyen-muc/giao-duc">{story.title}</Link>
-                                </h3>
-                                <span className="education-meta">{story.time}</span>
-                            </div>
-                            <Link
-                                className="education-latest__arrow"
-                                to="/chuyen-muc/giao-duc"
-                                aria-label={`Đọc tin: ${story.title}`}
-                            >
-                                →
-                            </Link>
-                        </article>
-                    ))}
-                </section>
+                <div className="education-content-grid">
+                    <section className="education-latest" id="tin-moi" aria-labelledby="latest-title">
+                        <div className="education-section-heading">
+                            <h2 id="latest-title">Tin mới</h2>
+                            <a href="#tin-moi">Xem tất cả</a>
+                        </div>
+                        {latestStories.map((story) => (
+                            <article className="education-latest__item" key={story.title}>
+                                <div>
+                                    <span className="education-label">{story.category}</span>
+                                    <h3>
+                                        <Link to="/chuyen-muc/giao-duc">{story.title}</Link>
+                                    </h3>
+                                    <span className="education-meta">{story.time}</span>
+                                </div>
+                                <Link
+                                    className="education-latest__arrow"
+                                    to="/chuyen-muc/giao-duc"
+                                    aria-label={`Đọc tin: ${story.title}`}
+                                >
+                                    →
+                                </Link>
+                            </article>
+                        ))}
+                    </section>
+
+                    <aside className="education-popular" aria-labelledby="popular-title">
+                        <div className="education-section-heading">
+                            <h2 id="popular-title">Đọc nhiều</h2>
+                        </div>
+                        <ol>
+                            {popularStories.map((title) => (
+                                <li key={title}>
+                                    <Link to="/chuyen-muc/giao-duc">{title}</Link>
+                                </li>
+                            ))}
+                        </ol>
+                    </aside>
+                </div>
             </div>
         </div>
     )
