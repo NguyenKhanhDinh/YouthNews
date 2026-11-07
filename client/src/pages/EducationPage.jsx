@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import ArticleCard from '../components/article/ArticleCard'
+import { articles } from '../data/articles'
 import './EducationPage.css'
 
 const topics = [
@@ -33,24 +35,6 @@ const secondaryStories = [
         image: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=720&q=85',
         imageAlt: 'Học sinh học tập cùng nhau',
         time: '4 giờ trước',
-    },
-]
-
-const latestStories = [
-    {
-        category: 'Tuyển sinh',
-        title: 'Thí sinh nên tìm hiểu kỹ đề án tuyển sinh trước khi đăng ký nguyện vọng',
-        time: '10 phút trước',
-    },
-    {
-        category: 'Giáo dục',
-        title: 'Tăng hoạt động trải nghiệm, giúp học sinh phát triển kỹ năng thực tế',
-        time: '35 phút trước',
-    },
-    {
-        category: 'Du học',
-        title: 'Ngày hội tư vấn du học mang cơ hội học bổng đến gần hơn với học sinh',
-        time: '1 giờ trước',
     },
 ]
 
@@ -125,24 +109,11 @@ export default function EducationPage() {
                             <h2 id="latest-title">Tin mới</h2>
                             <a href="#tin-moi">Xem tất cả</a>
                         </div>
-                        {latestStories.map((story) => (
-                            <article className="education-latest__item" key={story.title}>
-                                <div>
-                                    <span className="education-label">{story.category}</span>
-                                    <h3>
-                                        <Link to="/chuyen-muc/giao-duc">{story.title}</Link>
-                                    </h3>
-                                    <span className="education-meta">{story.time}</span>
-                                </div>
-                                <Link
-                                    className="education-latest__arrow"
-                                    to="/chuyen-muc/giao-duc"
-                                    aria-label={`Đọc tin: ${story.title}`}
-                                >
-                                    →
-                                </Link>
-                            </article>
-                        ))}
+                        <div className="article-list">
+                            {articles.map((article) => (
+                                <ArticleCard article={article} key={article.slug} />
+                            ))}
+                        </div>
                     </section>
 
                     <aside className="education-popular" aria-labelledby="popular-title">

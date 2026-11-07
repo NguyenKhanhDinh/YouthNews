@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
-import { categories } from '../data/categories'
-import Logo from './Logo'
+import { categories } from '../../data/categories'
+import Logo from '../Logo'
 import './Header.css'
 
 const NAV_VISIBLE = 4
