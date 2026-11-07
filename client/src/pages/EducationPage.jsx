@@ -36,6 +36,24 @@ const secondaryStories = [
     },
 ]
 
+const latestStories = [
+    {
+        category: 'Tuyển sinh',
+        title: 'Thí sinh nên tìm hiểu kỹ đề án tuyển sinh trước khi đăng ký nguyện vọng',
+        time: '10 phút trước',
+    },
+    {
+        category: 'Giáo dục',
+        title: 'Tăng hoạt động trải nghiệm, giúp học sinh phát triển kỹ năng thực tế',
+        time: '35 phút trước',
+    },
+    {
+        category: 'Du học',
+        title: 'Ngày hội tư vấn du học mang cơ hội học bổng đến gần hơn với học sinh',
+        time: '1 giờ trước',
+    },
+]
+
 export default function EducationPage() {
     return (
         <div className="education-page">
@@ -91,6 +109,31 @@ export default function EducationPage() {
                                 </h2>
                                 <span className="education-meta">{story.time}</span>
                             </div>
+                        </article>
+                    ))}
+                </section>
+
+                <section className="education-latest" id="tin-moi" aria-labelledby="latest-title">
+                    <div className="education-section-heading">
+                        <h2 id="latest-title">Tin mới</h2>
+                        <a href="#tin-moi">Xem tất cả</a>
+                    </div>
+                    {latestStories.map((story) => (
+                        <article className="education-latest__item" key={story.title}>
+                            <div>
+                                <span className="education-label">{story.category}</span>
+                                <h3>
+                                    <Link to="/chuyen-muc/giao-duc">{story.title}</Link>
+                                </h3>
+                                <span className="education-meta">{story.time}</span>
+                            </div>
+                            <Link
+                                className="education-latest__arrow"
+                                to="/chuyen-muc/giao-duc"
+                                aria-label={`Đọc tin: ${story.title}`}
+                            >
+                                →
+                            </Link>
                         </article>
                     ))}
                 </section>
