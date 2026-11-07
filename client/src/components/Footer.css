@@ -1,0 +1,192 @@
+.footer {
+    margin-top: 48px;
+    background: var(--yn-surface);
+    color: var(--yn-text);
+    border-top: 3px solid var(--yn-primary);
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.footer a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer__container {
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* ---------- Phần trên ---------- */
+.footer__top {
+    display: grid;
+    grid-template-columns: 1.6fr 1.2fr 1fr 1.3fr;
+    gap: 32px;
+    padding-top: 40px;
+    padding-bottom: 32px;
+}
+
+.footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.footer__about p {
+    max-width: 340px;
+    margin: 16px 0;
+    line-height: 1.6;
+    color: var(--yn-muted);
+}
+
+.footer__social {
+    display: flex;
+    gap: 10px;
+}
+
+.footer__social a {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--yn-border-strong);
+    border-radius: 50%;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.footer__social a:hover {
+    background: var(--yn-primary);
+    border-color: var(--yn-primary);
+    color: var(--yn-on-primary);
+}
+
+.footer__title {
+    position: relative;
+    margin: 0 0 18px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--yn-text);
+}
+
+.footer__title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 32px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--yn-accent);
+}
+
+.footer__links li + li {
+    margin-top: 10px;
+}
+
+.footer__links--two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+}
+
+.footer__links--two-col li + li {
+    margin-top: 0;
+}
+
+.footer__links a {
+    color: var(--yn-muted);
+    transition: color 0.2s;
+}
+
+.footer__links a:hover {
+    color: var(--yn-primary);
+}
+
+.footer__contact li {
+    display: flex;
+    gap: 10px;
+    line-height: 1.5;
+    color: var(--yn-muted);
+}
+
+.footer__contact li + li {
+    margin-top: 12px;
+}
+
+.footer__contact svg {
+    flex-shrink: 0;
+    width: 16px;
+    margin-top: 3px;
+    color: var(--yn-primary);
+}
+
+.footer__contact a:hover {
+    color: var(--yn-primary);
+}
+
+/* ---------- Thanh bản quyền ---------- */
+.footer__bottom {
+    border-top: 1px solid var(--yn-border);
+    font-size: 13px;
+    color: var(--yn-muted);
+}
+
+.footer__bottom-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.footer__bottom p {
+    margin: 0;
+}
+
+.footer__totop {
+    font: inherit;
+    font-weight: 600;
+    color: var(--yn-text);
+    background: transparent;
+    border: 1px solid var(--yn-border-strong);
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.footer__totop:hover {
+    border-color: var(--yn-primary);
+    color: var(--yn-primary);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .footer__top {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .footer__top {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding-top: 28px;
+    }
+
+    .footer__bottom-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+}

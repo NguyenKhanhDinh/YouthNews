@@ -2,19 +2,10 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
-import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
+import { categories } from '../data/categories'
+import Logo from './Logo'
 import './Header.css'
 
-const categories = [
-    { slug: 'giao-duc', name: 'Giáo dục' },
-    { slug: 'cong-nghe', name: 'Công nghệ' },
-    { slug: 'doi-song', name: 'Đời sống' },
-    { slug: 'the-thao', name: 'Thể thao' },
-    { slug: 'thoi-su', name: 'Thời sự' },
-    { slug: 'the-gioi', name: 'Thế giới' },
-    { slug: 'kinh-te', name: 'Kinh tế' },
-    { slug: 'suc-khoe', name: 'Sức khỏe' },
-]
 const NAV_VISIBLE = 4
 
 const trending = [
@@ -103,16 +94,7 @@ export default function Header() {
                     </button>
 
                     <Link to="/" className="header__logo" aria-label="YouthNews - Trang chủ" onClick={closeMenu}>
-                        <svg className="logo__mark" viewBox="5 8 48 50" aria-hidden="true">
-                            <polygon className="m-arm" points="7,10 18,10 27,27 21,35" />
-                            <rect className="m-stem" x="21" y="10" width="10" height="46" />
-                            <polygon className="m-diag" points="21,10 31,10 51,56 41,56" />
-                            <rect className="m-red" x="41" y="10" width="10" height="46" />
-                        </svg>
-                        <span className="logo__text">
-                            <span className="logo">YOUTH NEWS</span>
-                            <small className="logo__tagline">Tin tức của tuổi trẻ</small>
-                        </span>
+                        <Logo />
                     </Link>
                     <form className="header__search" onSubmit={handleSearch} role="search">
                         <input

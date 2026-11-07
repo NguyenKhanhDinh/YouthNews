@@ -1,4 +1,4 @@
-.header {
+:root {
   --yn-primary: #0b5cad;
   --yn-primary-dark: #08457f;
   --yn-on-primary: #ffffff;
@@ -11,21 +11,10 @@
   --yn-border: #e5e5e5;
   --yn-border-strong: #d0d5dd;
   --yn-radius: 6px;
-  --yn-logo: #4cb8f5;
-  --yn-logo-top: #9be0ff;
-  --yn-logo-bottom: #3b82d1;
-
-  background: var(--yn-bg);
-  color: var(--yn-text);
-  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --yn-logo: #0e9ae6;
 }
 
-/* Chế độ tối: bật khi <html data-theme="dark"> */
-:root[data-theme='dark'] .header {
+:root[data-theme='dark'] {
   --yn-primary: #5aa2ec;
   --yn-primary-dark: #3b82d1;
   --yn-on-primary: #0b1220;
@@ -37,9 +26,22 @@
   --yn-muted: #9aa8b8;
   --yn-border: #2b3643;
   --yn-border-strong: #3a4756;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --yn-logo: #4cb8f5;
 }
 
+.header {
+  background: var(--yn-bg);
+  color: var(--yn-text);
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme='dark'] .header {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
 .header a {
   text-decoration: none;
   color: inherit;
@@ -196,20 +198,23 @@
 /* nút đổi sáng/tối */
 .header__theme {
   font: inherit;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
   color: var(--yn-text);
   background: transparent;
   border: 1px solid var(--yn-border-strong);
-  padding: 8px 14px;
-  border-radius: 999px;
-  white-space: nowrap;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, color 0.2s;
 }
 
 .header__theme:hover {
   border-color: var(--yn-primary);
+  color: var(--yn-primary);
 }
 
 .header__burger {
@@ -410,23 +415,18 @@
   .header__burger {
     display: flex;
   }
-  .logo__tagline,
-  .header__login {
+
+  .header__login,
+  .header .logo__tagline {
     display: none;
   }
-  .header__logo-mark {
-    width: 36px;
-    height: 36px;
-    font-size: 22px;
+
+  .header .logo__mark {
+    height: 32px;
   }
 
-  .header__logo-text {
-    font-size: 22px;
-  }
-
-  .header__logo-text small,
-  .header__login {
-    display: none;
+  .header .logo {
+    font-size: 28px;
   }
 
   .header__search {
@@ -435,9 +435,10 @@
   }
 
   .header__theme {
-    padding: 6px 10px;
+    width: 34px;
+    height: 34px;
   }
-  .logo__mark { height: 32px; }
+
   .header__nav {
     display: none;
   }
