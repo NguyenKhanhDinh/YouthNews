@@ -314,6 +314,7 @@
   left: 0;
   right: 0;
   top: 100%;
+  z-index: 10;
   background: var(--yn-bg);
   border-bottom: 1px solid var(--yn-border);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
