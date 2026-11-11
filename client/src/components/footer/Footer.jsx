@@ -12,8 +12,8 @@ import {
     faLocationDot,
     faArrowUp,
 } from '@fortawesome/free-solid-svg-icons'
-import { categories } from '../data/categories'
-import Logo from './Logo'
+import { categories } from '../../data/categories'
+import Logo from '../Logo'
 import './Footer.css'
 
 const socials = [

@@ -14,6 +14,7 @@ function App() {
                     <Route path="/" element={<EducationPage />} />
                     <Route path="/chuyen-muc/giao-duc" element={<EducationPage />} />
                     <Route path="/dang-nhap" element={<Login />} />
+                    <Route path="*" element={<EducationPage />} />
                 </Routes>
             </main>
             <Footer />
