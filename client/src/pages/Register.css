@@ -1,0 +1,58 @@
+/* Phần riêng của trang đăng ký (khung chung nằm ở Auth.css) */
+
+.strength {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.strength__bars {
+    display: grid;
+    grid-template-columns: repeat(4, 28px);
+    gap: 4px;
+    flex: none;
+}
+
+.strength__bars i {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--yn-border);
+    transition: background 0.25s;
+}
+
+.strength__label {
+    font-size: 12.5px;
+    color: var(--yn-muted);
+}
+
+.strength[data-level='1'] i:nth-child(-n + 1) { background: var(--yn-accent); }
+.strength[data-level='2'] i:nth-child(-n + 2) { background: #f59e0b; }
+.strength[data-level='3'] i:nth-child(-n + 3) { background: #84cc16; }
+.strength[data-level='4'] i:nth-child(-n + 4) { background: #16a34a; }
+
+.register__agree {
+    margin: 2px 0 8px;
+}
+
+.register__agree .auth__check {
+    align-items: flex-start;
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+.register__agree .auth__check input {
+    margin-top: 2px;
+}
+
+.register__agree .field__error {
+    margin-top: 2px;
+}
+
+@media (max-width: 400px) {
+    .strength {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}
