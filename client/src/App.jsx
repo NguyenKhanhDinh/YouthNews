@@ -1,7 +1,9 @@
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from './components/header/Header'
+import Footer from './components//footer/Footer'
 import EducationPage from './pages/EducationPage'
+import AuthLayout from './pages/AuthLayout'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import './App.css'
 import {Route, Routes} from "react-router-dom";
 
@@ -13,7 +15,10 @@ function App() {
                 <Routes>
                     <Route path="/" element={<EducationPage />} />
                     <Route path="/chuyen-muc/giao-duc" element={<EducationPage />} />
-                    <Route path="/dang-nhap" element={<Login />} />
+                    <Route element={<AuthLayout />}>
+                        <Route path="/dang-nhap" element={<Login />} />
+                        <Route path="/dang-ky" element={<Register />} />
+                    </Route>
                     <Route path="*" element={<EducationPage />} />
                 </Routes>
             </main>
