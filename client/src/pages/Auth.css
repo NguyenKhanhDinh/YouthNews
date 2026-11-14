@@ -27,7 +27,6 @@
     outline-offset: 2px;
 }
 
-/* ---- Tab Đăng nhập | Đăng ký ---- */
 .auth__tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -56,7 +55,6 @@
     border-bottom-color: var(--yn-primary);
 }
 
-/* ---- Đường kẻ có chữ ---- */
 .auth__or {
     display: flex;
     align-items: center;
@@ -74,7 +72,6 @@
     background: var(--yn-border);
 }
 
-/* ---- Google ---- */
 .auth__google {
     display: flex;
     align-items: center;
@@ -112,7 +109,6 @@
     background: var(--yn-surface);
 }
 
-/* ---- Form ---- */
 .auth__form {
     display: flex;
     flex-direction: column;
@@ -295,3 +291,162 @@
         animation-duration: 1.6s;
     }
 }
+.auth__inner--forgot {
+    padding-top: clamp(16px, 5vw, 48px);
+}
+
+.captcha-wrap {
+    margin: 8px 0 4px;
+}
+
+.captcha {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-sizing: border-box;
+    width: min(100%, 334px);
+    height: 76px;
+    padding: 0 12px;
+    background: var(--yn-surface);
+    border: 1px solid var(--yn-border);
+    border-radius: 3px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+}
+
+.captcha__box {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    flex: none;
+}
+
+.captcha__box input {
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    background: var(--yn-bg);
+    border: 2px solid var(--yn-muted);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.captcha__box input:hover:not(:disabled) {
+    border-color: var(--yn-primary);
+}
+
+.captcha__box input:checked {
+    background: var(--yn-primary);
+    border-color: var(--yn-primary);
+}
+
+.captcha__box input:checked::after {
+    content: '';
+    display: block;
+    width: 7px;
+    height: 13px;
+    margin: 2px auto 0;
+    border: solid var(--yn-on-primary);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+.captcha__box input:disabled:not(:checked) {
+    border-color: transparent;
+    background: transparent;
+    cursor: wait;
+}
+
+.captcha__spinner {
+    position: absolute;
+    inset: 4px;
+    width: auto;
+    height: auto;
+    color: var(--yn-primary);
+}
+
+.captcha label {
+    flex: 1;
+    font-size: 15px;
+    color: var(--yn-text);
+    cursor: pointer;
+}
+
+.captcha__brand {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    font-size: 22px;
+    color: var(--yn-primary);
+}
+
+.captcha__brand small {
+    font-size: 10px;
+    color: var(--yn-muted);
+}
+
+.auth__back {
+    margin: 18px 0 0;
+    font-size: 14px;
+    text-align: center;
+    color: var(--yn-muted);
+}
+
+.auth__notice {
+    padding: 4px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--yn-text);
+}
+
+.auth__notice p {
+    margin: 0 0 12px;
+}
+
+.auth__notice .auth__notice-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.auth__notice-actions {
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+.auth__submit--link {
+    text-decoration: none;
+}
+
+.auth__textbtn {
+    padding: 4px 8px;
+    font-size: 14px;
+    color: var(--yn-muted);
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.auth__textbtn:hover {
+    color: var(--yn-primary);
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .auth__tabs a {
+        font-size: 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth__spinner {
+        animation-duration: 1.6s;
+    }
+}
+
