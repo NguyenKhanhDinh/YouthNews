@@ -13,36 +13,9 @@ const topics = [
     'Cẩm nang tuyển sinh 2026',
 ]
 
-const featuredStory = {
-    category: 'Tuyển sinh',
-    title: 'Nhiều trường đại học công bố phương án tuyển sinh, thí sinh cần lưu ý gì?',
-    summary: 'Cập nhật những thông tin đáng chú ý dành cho học sinh và phụ huynh trong mùa tuyển sinh.',
-    image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=85',
-    imageAlt: 'Sinh viên trong lễ tốt nghiệp',
-}
-
-const secondaryStories = [
-    {
-        category: 'Nhà trường',
-        title: 'Đổi mới cách dạy học để học sinh chủ động khám phá kiến thức',
-        image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=720&q=85',
-        imageAlt: 'Giáo viên hướng dẫn học sinh trong lớp',
-        time: '3 giờ trước',
-    },
-    {
-        category: 'Chọn nghề - Chọn trường',
-        title: 'Học sinh cuối cấp cần chuẩn bị gì trước mùa chọn ngành?',
-        image: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=720&q=85',
-        imageAlt: 'Học sinh học tập cùng nhau',
-        time: '4 giờ trước',
-    },
-]
-
-const popularStories = [
-    'Cách chọn ngành học phù hợp với năng lực và sở thích',
-    'Những mốc thời gian quan trọng trong mùa tuyển sinh',
-    'Học sinh cần chuẩn bị gì cho kỳ thi tốt nghiệp?',
-]
+const featuredStory = articles[0]
+const secondaryStories = articles.slice(1, 3)
+const popularStories = articles.slice(5, 8)
 
 export default function EducationPage() {
     return (
@@ -73,31 +46,31 @@ export default function EducationPage() {
                 </nav>
 
                 <article className="education-featured">
-                    <Link className="education-featured__image" to="/chuyen-muc/giao-duc">
+                    <Link className="education-featured__image" to={`/bai-viet/${featuredStory.slug}`}>
                         <img src={featuredStory.image} alt={featuredStory.imageAlt} />
                     </Link>
                     <div className="education-featured__content">
                         <span className="education-label">{featuredStory.category}</span>
                         <h2>
-                            <Link to="/chuyen-muc/giao-duc">{featuredStory.title}</Link>
+                            <Link to={`/bai-viet/${featuredStory.slug}`}>{featuredStory.title}</Link>
                         </h2>
                         <p>{featuredStory.summary}</p>
-                        <span className="education-meta">Tin mới · 5 phút đọc</span>
+                        <span className="education-meta">{featuredStory.date} · {featuredStory.readTime}</span>
                     </div>
                 </article>
 
                 <section className="education-secondary" aria-label="Tin giáo dục đáng chú ý">
                     {secondaryStories.map((story) => (
                         <article className="education-card" key={story.title}>
-                            <Link className="education-card__image" to="/chuyen-muc/giao-duc">
+                            <Link className="education-card__image" to={`/bai-viet/${story.slug}`}>
                                 <img src={story.image} alt={story.imageAlt} loading="lazy" />
                             </Link>
                             <div className="education-card__content">
                                 <span className="education-label">{story.category}</span>
                                 <h2>
-                                    <Link to="/chuyen-muc/giao-duc">{story.title}</Link>
+                                    <Link to={`/bai-viet/${story.slug}`}>{story.title}</Link>
                                 </h2>
-                                <span className="education-meta">{story.time}</span>
+                                <span className="education-meta">{story.date} · {story.readTime}</span>
                             </div>
                         </article>
                     ))}
@@ -110,7 +83,7 @@ export default function EducationPage() {
                             <a href="#tin-moi">Xem tất cả</a>
                         </div>
                         <div className="article-list">
-                            {articles.map((article) => (
+                            {articles.slice(3).map((article) => (
                                 <ArticleCard article={article} key={article.slug} />
                             ))}
                         </div>
@@ -121,9 +94,9 @@ export default function EducationPage() {
                             <h2 id="popular-title">Đọc nhiều</h2>
                         </div>
                         <ol>
-                            {popularStories.map((title) => (
-                                <li key={title}>
-                                    <Link to="/chuyen-muc/giao-duc">{title}</Link>
+                            {popularStories.map((article) => (
+                                <li key={article.slug}>
+                                    <Link to={`/bai-viet/${article.slug}`}>{article.title}</Link>
                                 </li>
                             ))}
                         </ol>
