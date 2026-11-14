@@ -180,4 +180,51 @@
         grid-template-columns: 1fr;
         gap: 16px;
     }
+.article-detail__related-list {
+    display: grid;
+    gap: 16px;
+}
+
+.article-detail__related .article-card {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.article-detail__related .article-card__image {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.article-detail__related .article-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-detail__related .article-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+}
+
+.article-detail__related .article-card__content h3 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.article-detail__related .article-card__content p,
+.article-detail__related .education-label {
+    display: none;
+}
+
+.article-detail__related .education-meta {
+    font-size: 12px;
+}
 }

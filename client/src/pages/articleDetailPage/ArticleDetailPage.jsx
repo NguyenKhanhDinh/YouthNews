@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { articles } from '../data/articles'
 import { categories } from '../data/categories'
+import ArticleCard from '../components/article/ArticleCard'
 import './ArticleDetailPage.css'
 
 export default function ArticleDetailPage() {
@@ -82,15 +83,14 @@ export default function ArticleDetailPage() {
                     {relatedArticles.length > 0 && (
                         <aside className="article-detail__related" aria-labelledby="related-title">
                             <h2 id="related-title">Bài viết liên quan</h2>
-                            <ul>
+                            <div className="article-detail__related-list">
                                 {relatedArticles.map((relatedArticle) => (
-                                    <li key={relatedArticle.slug}>
-                                        <Link to={`/bai-viet/${relatedArticle.slug}`}>
-                                            {relatedArticle.title}
-                                        </Link>
-                                    </li>
+                                    <ArticleCard
+                                        key={relatedArticle.slug}
+                                        article={relatedArticle}
+                                    />
                                 ))}
-                            </ul>
+                            </div>
                         </aside>
                     )}
                 </div>
