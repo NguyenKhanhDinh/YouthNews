@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import ArticleCard from '../components/article/ArticleCard'
 import { articles } from '../data/articles'
-import './EducationPage.css'
+import './educationPage/EducationPage.css'
 
 function normalizeText(text) {
     return text
