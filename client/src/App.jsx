@@ -4,6 +4,7 @@ import EducationPage from './pages/EducationPage'
 import AuthLayout from './pages/AuthLayout'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import SearchPage from './pages/SearchPage'
 import './App.css'
 import {Route, Routes} from "react-router-dom";
 
@@ -15,6 +16,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<EducationPage />} />
                     <Route path="/chuyen-muc/giao-duc" element={<EducationPage />} />
+                    <Route path="/tim-kiem" element={<SearchPage />} />
                     <Route element={<AuthLayout />}>
                         <Route path="/dang-nhap" element={<Login />} />
                         <Route path="/dang-ky" element={<Register />} />
