@@ -444,4 +444,59 @@
     .education-popular {
         padding: 16px;
     }
+.search-page__form {
+    display: flex;
+    gap: 10px;
+    margin: 8px 0 24px;
+    max-width: 520px;
+}
+
+.search-page__form input {
+    flex: 1;
+    padding: 12px 14px;
+    border: 1px solid var(--yn-border);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    background: var(--yn-surface);
+    color: var(--yn-text);
+}
+
+.search-page__form input:focus {
+    outline: 2px solid var(--yn-primary);
+    outline-offset: 1px;
+}
+
+.search-page__form button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: var(--yn-primary);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.search-page__form button:hover {
+    opacity: 0.9;
+}
+
+.search-page__empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--yn-muted);
+}
+
+.search-page__empty p {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+.search-page__hint {
+    font-size: 14px !important;
+    opacity: 0.85;
+}
 }

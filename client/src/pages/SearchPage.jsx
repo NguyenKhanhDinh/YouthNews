@@ -1,4 +1,5 @@
-import { Link, useSearchParams } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import ArticleCard from '../components/article/ArticleCard'
 import { articles } from '../data/articles'
 import './EducationPage.css'
@@ -13,7 +14,10 @@ function normalizeText(text) {
 
 export default function SearchPage() {
     const [searchParams] = useSearchParams()
+    const navigate = useNavigate()
     const query = searchParams.get('q')?.trim() ?? ''
+    const [keyword, setKeyword] = useState(query)
+
     const normalizedQuery = normalizeText(query)
     const results = normalizedQuery
         ? articles.filter((article) =>
@@ -21,6 +25,13 @@ export default function SearchPage() {
                 .some((value) => normalizeText(value).includes(normalizedQuery)),
         )
         : []
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const q = keyword.trim()
+        if (!q) return
+        navigate(`/tim-kiem?q=${encodeURIComponent(q)}`)
+    }
 
     return (
         <div className="education-page">
@@ -38,6 +49,17 @@ export default function SearchPage() {
                     </div>
                 </section>
 
+                <form className="search-page__form" onSubmit={handleSubmit} role="search">
+                    <input
+                        type="search"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                        placeholder="Nhập từ khóa tìm kiếm..."
+                        aria-label="Từ khóa tìm kiếm"
+                    />
+                    <button type="submit">Tìm kiếm</button>
+                </form>
+
                 {query && (
                     <p className="education-page__intro" aria-live="polite">
                         Từ khóa “{query}” · {results.length} kết quả
@@ -45,7 +67,12 @@ export default function SearchPage() {
                 )}
 
                 {!query ? (
-                    <p role="status">Vui lòng nhập từ khóa vào ô tìm kiếm phía trên.</p>
+                    <div className="search-page__empty" role="status">
+                        <p>Vui lòng nhập từ khóa vào ô tìm kiếm phía trên.</p>
+                        <p className="search-page__hint">
+                            Gợi ý: tuyển sinh, đại học, học bổng, kỳ thi...
+                        </p>
+                    </div>
                 ) : results.length > 0 ? (
                     <div className="article-list">
                         {results.map((article) => (
@@ -53,7 +80,12 @@ export default function SearchPage() {
                         ))}
                     </div>
                 ) : (
-                    <p role="status">Không tìm thấy bài viết phù hợp với từ khóa “{query}”.</p>
+                    <div className="search-page__empty" role="status">
+                        <p>Không tìm thấy bài viết phù hợp với từ khóa “{query}”.</p>
+                        <p className="search-page__hint">
+                            Thử từ khóa ngắn hơn hoặc kiểm tra chính tả.
+                        </p>
+                    </div>
                 )}
             </div>
         </div>
