@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { Field, SocialLogin } from './authShared'
-import { EMAIL_RE, focusFirstError } from './authUtils'
+import { Field, SocialLogin } from '../authShared'
+import { EMAIL_RE, focusFirstError } from '../authUtils'
 
 function validate({ email, password }) {
     const errors = {}
