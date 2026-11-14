@@ -74,7 +74,7 @@
     scrollbar-width: thin;
 }
 
-.education-topics a {
+.education-topics button {
     flex: 0 0 auto;
     padding: 8px 13px;
     border: 1px solid transparent;
@@ -83,10 +83,13 @@
     font-size: 13px;
     font-weight: 600;
     white-space: nowrap;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
 }
 
-.education-topics a:hover,
-.education-topics a.is-selected {
+.education-topics button:hover,
+.education-topics button.is-selected {
     border-color: var(--yn-primary);
     color: var(--yn-primary);
     background: var(--yn-hover);
@@ -274,6 +277,27 @@
     font-size: 13px;
     font-weight: 700;
     text-decoration: none;
+}
+
+.education-section-heading__reset {
+    border: none;
+    background: none;
+    color: var(--yn-primary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+}
+
+.education-section-heading__reset:hover {
+    text-decoration: underline;
+}
+
+.education-empty {
+    margin: 24px 0;
+    color: var(--yn-muted);
+    font-size: 15px;
 }
 
 .education-latest__item {

@@ -9,6 +9,7 @@ import ArticleDetailPage from './pages/ArticleDetailPage'
 import ForgotPassword from './pages/ForgotPassword'
 import './App.css'
 import {Route, Routes} from "react-router-dom";
+import BackToTop from './components/BackToTop'
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                 </Routes>
             </main>
             <Footer />
+            <BackToTop />
         </div>
     )
 }
