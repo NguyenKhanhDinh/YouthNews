@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { articles } from '../data/articles'
 import { categories } from '../data/categories'
@@ -6,6 +7,21 @@ import './ArticleDetailPage.css'
 export default function ArticleDetailPage() {
     const { slug } = useParams()
     const article = articles.find((item) => item.slug === slug)
+    const [progress, setProgress] = useState(0)
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight
+            const percent = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0
+            setProgress(percent)
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        handleScroll()
+
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
 
     if (!article) {
         return (
@@ -26,6 +42,11 @@ export default function ArticleDetailPage() {
 
     return (
         <article className="article-detail">
+            <div
+                className="article-detail__progress"
+                style={{ width: `${progress}%` }}
+                aria-hidden="true"
+            />
             <div className="article-detail__container">
                 <nav className="article-detail__breadcrumb" aria-label="Đường dẫn">
                     <Link to="/">Trang chủ</Link>
