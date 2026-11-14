@@ -1,15 +1,15 @@
 import Header from './components/header/Header'
-import Footer from './components//footer/Footer'
-import EducationPage from './pages/EducationPage'
+import Footer from './components/footer/Footer'
+import EducationPage from './pages/educationPage/EducationPage'
 import AuthLayout from './pages/AuthLayout'
-import Login from './pages/Login'
-import Register from './pages/Register'
+import Login from './pages/login/Login'
+import Register from './pages/register/Register'
 import SearchPage from './pages/SearchPage'
-import ArticleDetailPage from './pages/ArticleDetailPage'
+import ArticleDetailPage from './pages/articleDetailPage/ArticleDetailPage'
 import ForgotPassword from './pages/ForgotPassword'
 import './App.css'
 import {Route, Routes} from "react-router-dom";
-import BackToTop from './components/BackToTop'
+import BackToTop from './components/backToTop/BackToTop'
 
 function App() {
     return (

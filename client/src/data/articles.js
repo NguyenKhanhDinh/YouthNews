@@ -14,6 +14,8 @@ export const articles = [
             'Mỗi mùa tuyển sinh, các trường đại học lần lượt công bố đề án và phương thức xét tuyển. Thí sinh nên theo dõi thông tin từ website chính thức của trường để chủ động chuẩn bị hồ sơ.',
             'Khi tìm hiểu một phương thức xét tuyển, hãy chú ý điều kiện đăng ký, mốc thời gian, giấy tờ cần nộp và cách tính điểm. Những chi tiết này có thể khác nhau giữa các trường và giữa các ngành học.',
             'Một danh sách nguyện vọng được sắp xếp theo mức độ yêu thích, đồng thời cân nhắc năng lực và điều kiện cá nhân, sẽ giúp thí sinh có kế hoạch rõ ràng hơn.',
+            'Trước khi đăng ký, thí sinh nên đối chiếu thông tin giữa đề án tuyển sinh và hướng dẫn đăng ký chính thức. Nếu có nội dung chưa rõ, hãy hỏi bộ phận tư vấn tuyển sinh của trường thay vì dựa vào các bài đăng chưa được xác nhận.',
+            'Phụ huynh có thể đồng hành bằng cách cùng con lập danh sách những việc cần làm và thời hạn tương ứng. Việc chuẩn bị sớm giúp gia đình có thời gian kiểm tra hồ sơ và hạn chế bỏ sót thông tin.',
         ],
     },
     {
@@ -31,6 +33,8 @@ export const articles = [
             'Một tiết học có nhiều cơ hội trao đổi giúp học sinh không chỉ tiếp nhận thông tin mà còn thử đặt câu hỏi, trình bày ý tưởng và lắng nghe góc nhìn của bạn bè.',
             'Giáo viên có thể bắt đầu từ những hoạt động vừa sức như thảo luận nhóm nhỏ, giải quyết tình huống hoặc thực hiện dự án gắn với nội dung bài học.',
             'Điều quan trọng là tạo môi trường để học sinh được thử nghiệm và nhận phản hồi. Qua đó, các em từng bước hình thành sự tự tin và khả năng tự học.',
+            'Để hoạt động nhóm đạt hiệu quả, nhiệm vụ cần có mục tiêu rõ ràng và phù hợp với thời lượng tiết học. Mỗi thành viên nên có cơ hội đóng góp, thay vì để một vài bạn làm thay cả nhóm.',
+            'Sau hoạt động, phần cùng nhìn lại cách làm và kết quả giúp học sinh nhận ra điều đã hiểu cũng như câu hỏi còn cần tìm lời giải. Giáo viên có thể dựa vào phản hồi này để điều chỉnh bài học tiếp theo.',
         ],
     },
     {
@@ -48,6 +52,8 @@ export const articles = [
             'Chọn ngành là quá trình tìm hiểu bản thân và các lựa chọn học tập, không nhất thiết phải quyết định trong một lần. Học sinh có thể bắt đầu bằng việc ghi lại những môn học, hoạt động và lĩnh vực mình quan tâm.',
             'Tiếp theo, hãy tìm hiểu chương trình đào tạo, yêu cầu đầu vào và cơ hội trải nghiệm thực tế của từng ngành. Trao đổi với thầy cô, gia đình hoặc sinh viên đang theo học cũng giúp có thêm góc nhìn.',
             'Khi đã có một số lựa chọn, hãy so sánh chúng với mục tiêu và điều kiện của mình để lập kế hoạch học tập phù hợp.',
+            'Một cách hữu ích là chọn vài ngành đang cân nhắc rồi ghi ra điểm khiến mình hứng thú, những kỹ năng cần có và điều muốn tìm hiểu thêm. Cách ghi chú này giúp cuộc trao đổi với gia đình hoặc thầy cô cụ thể hơn.',
+            'Không nên chỉ dựa vào tên ngành hay một lời khuyên đơn lẻ để đưa ra quyết định. Hãy xem đề cương môn học, hoạt động thực hành và yêu cầu đầu vào trên kênh thông tin chính thức của trường.',
         ],
     },
     {
@@ -65,6 +71,8 @@ export const articles = [
             'Các chương trình học bổng có thể hỗ trợ học phí, chi phí sinh hoạt hoặc tạo cơ hội tham gia các hoạt động chuyên môn. Mỗi chương trình có tiêu chí và thời hạn đăng ký riêng.',
             'Sinh viên nên đọc kỹ thể lệ, chuẩn bị bảng điểm và các giấy tờ được yêu cầu trước khi nộp hồ sơ. Một bài giới thiệu ngắn gọn, trung thực về mục tiêu học tập cũng giúp hồ sơ thể hiện rõ động lực của người đăng ký.',
             'Hãy kiểm tra thông báo trên kênh chính thức của đơn vị cấp học bổng để cập nhật thời gian và hướng dẫn mới nhất.',
+            'Trước khi gửi hồ sơ, hãy lập danh sách từng yêu cầu và đánh dấu những mục đã hoàn thành. Nhờ một người khác đọc lại hồ sơ cũng có thể giúp phát hiện thông tin còn thiếu hoặc lỗi trình bày.',
+            'Nếu chưa đáp ứng một tiêu chí trong đợt hiện tại, sinh viên vẫn có thể dùng thông tin đó để chuẩn bị cho cơ hội sau. Việc theo dõi tiến độ học tập và tích lũy trải nghiệm nên được thực hiện đều đặn.',
         ],
     },
     {
@@ -82,6 +90,8 @@ export const articles = [
             'Lịch thi là căn cứ để học sinh và nhà trường lên kế hoạch ôn tập, chuẩn bị hồ sơ và sắp xếp việc đi lại. Thí sinh cần xem kỹ ngày thi của từng môn và các mốc công việc liên quan.',
             'Bên cạnh lịch thi, hãy theo dõi hướng dẫn về giấy tờ cần mang theo, thời gian có mặt tại điểm thi và các quy định trong phòng thi.',
             'Nếu có thay đổi hoặc cần xác nhận thông tin, thí sinh nên liên hệ giáo viên phụ trách hoặc kiểm tra thông báo chính thức của cơ quan tổ chức kỳ thi.',
+            'Sau khi có lịch chính thức, học sinh có thể lập kế hoạch ôn tập ngược từ ngày thi để phân bổ thời gian cho từng môn. Nên để lại những khoảng trống trong kế hoạch để ôn lại kiến thức và nghỉ ngơi.',
+            'Các mốc liên quan đến hồ sơ và thủ tục cũng cần được ghi riêng, tránh nhầm lẫn với ngày thi. Khi thông tin được cập nhật, hãy sửa lại lịch cá nhân theo nguồn thông báo mới nhất.',
         ],
     },
     {
@@ -99,6 +109,8 @@ export const articles = [
             'Năng lực, sở thích và môi trường học tập là những yếu tố có thể cân nhắc khi tìm hiểu ngành học. Học sinh có thể xem lại những hoạt động mình thường chủ động tham gia và kỹ năng muốn phát triển.',
             'Thông tin từ chương trình đào tạo, ngày hội tư vấn và trải nghiệm nghề nghiệp sẽ giúp hình dung cụ thể hơn về nội dung học tập.',
             'Tham khảo ý kiến của người khác là hữu ích, nhưng lựa chọn cuối cùng nên dựa trên mục tiêu và điều kiện của bản thân.',
+            'Khi so sánh các lựa chọn, hãy xem cả những môn học chính, hình thức học tập và điều kiện sinh hoạt. Những thông tin này giúp bức tranh về ngành học thực tế hơn so với chỉ nhìn vào tên gọi.',
+            'Nếu vẫn còn phân vân, hãy ghi lại câu hỏi cụ thể để trao đổi với người có kinh nghiệm hoặc tham gia buổi tư vấn. Quá trình tìm hiểu từng bước sẽ giúp lựa chọn trở nên có cơ sở hơn.',
         ],
     },
     {
@@ -116,6 +128,8 @@ export const articles = [
             'Trong mùa tuyển sinh thường có nhiều thời hạn cần theo dõi như thời gian đăng ký, điều chỉnh nguyện vọng, xác nhận nhập học và nộp hồ sơ.',
             'Thí sinh có thể lưu các mốc quan trọng vào lịch cá nhân, đồng thời bật nhắc việc trước hạn vài ngày để có thời gian kiểm tra thông tin.',
             'Do lịch trình có thể được cập nhật, hãy đối chiếu ghi chú của mình với thông báo chính thức từ trường và cơ quan tuyển sinh.',
+            'Nên lưu kèm đường dẫn đến thông báo gốc và ghi rõ việc cần hoàn thành ở mỗi mốc. Cách này giúp dễ kiểm tra lại yêu cầu khi cần nộp hồ sơ hoặc cập nhật lựa chọn.',
+            'Nếu có nhiều trường trong danh sách, hãy tạo bảng theo dõi riêng để không nhầm thời hạn và phương thức đăng ký. Đừng chờ đến sát ngày cuối mới xác nhận thông tin.',
         ],
     },
     {
@@ -133,6 +147,8 @@ export const articles = [
             'Một kế hoạch ôn tập chia theo từng chủ đề giúp học sinh theo dõi tiến độ và dành thời gian phù hợp cho nội dung còn chưa vững.',
             'Ngoài việc học, hãy chuẩn bị trước giấy tờ và vật dụng được phép mang vào phòng thi theo hướng dẫn của đơn vị tổ chức.',
             'Ngủ đủ giấc, ăn uống đúng giờ và đến điểm thi sớm cũng giúp ngày thi diễn ra bình tĩnh, suôn sẻ hơn.',
+            'Khi ôn tập, học sinh có thể kết hợp đọc lại kiến thức với tự làm câu hỏi và ghi chú những phần thường nhầm lẫn. Việc kiểm tra lại theo từng đợt giúp nhận ra nội dung cần ưu tiên.',
+            'Trước ngày thi, hãy kiểm tra lại địa điểm, thời gian có mặt và giấy tờ cần thiết. Chuẩn bị từ tối hôm trước giúp buổi sáng diễn ra chủ động và giảm căng thẳng.',
         ],
     },
 ]

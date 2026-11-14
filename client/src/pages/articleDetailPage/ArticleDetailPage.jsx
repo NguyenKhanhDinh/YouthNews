@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { articles } from '../data/articles'
-import { categories } from '../data/categories'
-import ArticleCard from '../components/article/ArticleCard'
+import { articles } from '../../data/articles'
+import { categories } from '../../data/categories'
+import ArticleCard from '../../components/article/ArticleCard'
 import './ArticleDetailPage.css'
 
 export default function ArticleDetailPage() {
