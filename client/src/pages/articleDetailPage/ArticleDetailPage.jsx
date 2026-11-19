@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { articles } from '../../data/articles'
+import { allArticles } from '../../data/allArticles'
 import { categories } from '../../data/categories'
 import ArticleCard from '../../components/article/ArticleCard'
 import './ArticleDetailPage.css'
 
 export default function ArticleDetailPage() {
     const { slug } = useParams()
-    const article = articles.find((item) => item.slug === slug)
+    const article = allArticles.find((item) => item.slug === slug)
     const [progress, setProgress] = useState(0)
 
     useEffect(() => {
@@ -37,7 +37,7 @@ export default function ArticleDetailPage() {
     const category = categories.find((item) => item.slug === article.categorySlug)
     const categoryName = category?.name ?? article.category
     const categoryPath = `/chuyen-muc/${article.categorySlug}`
-    const relatedArticles = articles
+    const relatedArticles = allArticles
         .filter((item) => item.categorySlug === article.categorySlug && item.slug !== article.slug)
         .slice(0, 3)
 

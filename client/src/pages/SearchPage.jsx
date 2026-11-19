@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import ArticleCard from '../components/article/ArticleCard'
-import { articles } from '../data/articles'
+import { allArticles } from '../data/allArticles'
 import './educationPage/EducationPage.css'
 
 function normalizeText(text) {
@@ -20,7 +20,7 @@ export default function SearchPage() {
 
     const normalizedQuery = normalizeText(query)
     const results = normalizedQuery
-        ? articles.filter((article) =>
+        ? allArticles.filter((article) =>
             [article.title, article.summary, article.category]
                 .some((value) => normalizeText(value).includes(normalizedQuery)),
         )
