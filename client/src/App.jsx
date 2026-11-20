@@ -7,6 +7,7 @@ import AuthLayout from './pages/AuthLayout'
 import Login from './pages/login/Login'
 import Register from './pages/register/Register'
 import SearchPage from './pages/SearchPage'
+import HomePage from './pages/HomePage/HomePage.jsx'
 import ArticleDetailPage from './pages/articleDetailPage/ArticleDetailPage'
 import ForgotPassword from './pages/ForgotPassword'
 import './App.css'
@@ -19,6 +20,7 @@ function App() {
             <Header />
             <main className="app__main">
                 <Routes>
+                    <Route path = "/" element={<HomePage />} />
                     <Route path="/" element={<EducationPage />} />
                     <Route path="/chuyen-muc/giao-duc" element={<EducationPage />} />
                     <Route path="/chuyen-muc/cong-nghe" element={<TechnologyPage />} />
