@@ -1,6 +1,8 @@
 import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
 import EducationPage from './pages/educationPage/EducationPage'
+import TechnologyPage from './pages/technologyPage/TechnologyPage'
+import LifestylePage from './pages/lifestylePage/LifestylePage'
 import AuthLayout from './pages/AuthLayout'
 import Login from './pages/login/Login'
 import Register from './pages/register/Register'
@@ -21,6 +23,8 @@ function App() {
                     <Route path = "/" element={<HomePage />} />
                     <Route path="/" element={<EducationPage />} />
                     <Route path="/chuyen-muc/giao-duc" element={<EducationPage />} />
+                    <Route path="/chuyen-muc/cong-nghe" element={<TechnologyPage />} />
+                    <Route path="/chuyen-muc/doi-song" element={<LifestylePage />} />
                     <Route path="/tim-kiem" element={<SearchPage />} />
                     <Route path="/bai-viet/:slug" element={<ArticleDetailPage />} />
                     <Route element={<AuthLayout />}>
