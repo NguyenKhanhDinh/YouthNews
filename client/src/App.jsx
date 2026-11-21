@@ -12,6 +12,8 @@ import HomePage from './pages/HomePage/HomePage.jsx'
 import ArticleDetailPage from './pages/articleDetailPage/ArticleDetailPage'
 import ForgotPassword from './pages/ForgotPassword'
 import NotFoundPage from './pages/notFoundPage/NotFoundPage'
+import VideoPage from './pages/videoPage/VideoPage'
+import VideoDetailPage from './pages/videoPage/VideoDetailPage'
 import './App.css'
 import {Route, Routes} from "react-router-dom";
 import BackToTop from './components/backToTop/BackToTop'
@@ -27,6 +29,8 @@ function App() {
                     <Route path="/chuyen-muc/cong-nghe" element={<TechnologyPage />} />
                     <Route path="/chuyen-muc/doi-song" element={<LifestylePage />} />
                     <Route path="/chuyen-muc/:slug" element={<CategoryPage />} />
+                    <Route path="/video" element={<VideoPage />} />
+                    <Route path="/video/:slug" element={<VideoDetailPage />} />
                     <Route path="/tim-kiem" element={<SearchPage />} />
                     <Route path="/bai-viet/:slug" element={<ArticleDetailPage />} />
                     <Route element={<AuthLayout />}>

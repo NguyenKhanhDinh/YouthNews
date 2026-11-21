@@ -219,6 +219,9 @@ export default function Header() {
                                     {c.name}
                                 </Link>
                             ))}
+                            <Link to="/video" onClick={closeMenu}>
+                                Video
+                            </Link>
                         </div>
                     </div>
                 )}
