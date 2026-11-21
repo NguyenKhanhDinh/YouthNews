@@ -1,0 +1,115 @@
+.ad {
+    position: relative;
+    margin: 28px 0;
+}
+
+.ad__label {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--yn-muted);
+    font-size: 12px;
+}
+
+.ad__close {
+    position: absolute;
+    top: -2px;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--yn-muted);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.ad__close:hover { color: var(--yn-text); }
+
+.ad__close:focus-visible,
+.ad__box:focus-visible {
+    outline: 2px solid var(--yn-primary);
+    outline-offset: 2px;
+}
+
+.ad__box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 22px;
+    border-radius: var(--yn-radius);
+    color: #fff;
+    text-decoration: none;
+}
+
+.ad__box--blue { background: linear-gradient(100deg, #0b5cad, #08457f); }
+.ad__box--dark { background: linear-gradient(100deg, #2b3340, #161b22); }
+.ad__box--green { background: linear-gradient(100deg, #12795a, #0b5640); }
+.ad__box--loading { background: var(--yn-surface); }
+
+.ad__brand {
+    flex: none;
+    max-width: 150px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.ad__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.ad__text strong { font-size: 17px; line-height: 1.3; }
+.ad__text span { font-size: 14px; opacity: 0.9; }
+
+.ad__cta {
+    flex: none;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: #fff;
+    color: #111;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.ad__box:hover .ad__cta { background: #f1f1f1; }
+
+.ad--leaderboard .ad__box { min-height: 90px; }
+
+.ad--rectangle { margin: 0; max-width: 300px; }
+
+.ad--rectangle .ad__box {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 250px;
+    padding: 20px;
+}
+
+.ad--rectangle .ad__brand { max-width: none; font-size: 14px; opacity: 0.85; }
+.ad--rectangle .ad__text strong { font-size: 22px; line-height: 1.25; }
+.ad--rectangle .ad__text span { margin-top: 8px; }
+
+.ad-side {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-self: start;
+    min-width: 0;
+}
+
+@media (max-width: 700px) {
+    .ad--leaderboard .ad__box {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 14px 16px;
+    }
+
+    .ad--leaderboard .ad__brand { max-width: none; width: 100%; font-size: 13px; opacity: 0.85; }
+    .ad--rectangle { max-width: none; }
+}
