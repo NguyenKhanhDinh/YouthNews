@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { api } from '../../api'
 import { Field, SocialLogin } from '../authShared'
 import { EMAIL_RE, focusFirstError } from '../authUtils'
 import './Register.css'
@@ -47,6 +48,7 @@ function PasswordInput({ show, onToggle, ...props }) {
 }
 
 export default function Register() {
+    const navigate = useNavigate()
     const [values, setValues] = useState({ name: '', email: '', password: '', confirm: '', agree: false })
     const [touched, setTouched] = useState({})
     const [showPassword, setShowPassword] = useState(false)
@@ -77,8 +79,8 @@ export default function Register() {
         setSubmitting(true)
         setFormError('')
         try {
-            // TODO: thay bằng lệnh gọi fake API đăng ký.
-            console.log('Đăng ký:', { name: values.name.trim(), email: values.email.trim() })
+            await api.register({ name: values.name, email: values.email, password: values.password })
+            navigate('/dang-nhap')
         } catch (err) {
             setFormError(err.message || 'Không thể hoàn tất, vui lòng thử lại')
         } finally {

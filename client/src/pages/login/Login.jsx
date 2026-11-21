@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { api } from '../../api'
 import { Field, SocialLogin } from '../authShared'
 import { EMAIL_RE, focusFirstError } from '../authUtils'
 
@@ -15,6 +16,7 @@ function validate({ email, password }) {
 }
 
 export default function Login() {
+    const navigate = useNavigate()
     const [values, setValues] = useState({ email: '', password: '' })
     const [touched, setTouched] = useState({})
     const [showPassword, setShowPassword] = useState(false)
@@ -43,8 +45,8 @@ export default function Login() {
         setSubmitting(true)
         setFormError('')
         try {
-            // TODO: thay bằng lệnh gọi fake API đăng nhập.
-            console.log('Đăng nhập:', { email: values.email.trim() })
+            await api.login({ email: values.email, password: values.password })
+            navigate('/')
         } catch (err) {
             setFormError(err.message || 'Không thể đăng nhập, vui lòng thử lại')
         } finally {

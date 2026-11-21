@@ -1,16 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import ArticleCard from '../components/article/ArticleCard'
-import { allArticles } from '../data/allArticles'
+import { api, useApi } from '../api'
 import './educationPage/EducationPage.css'
-
-function normalizeText(text) {
-    return text
-        .toLocaleLowerCase('vi')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/đ/g, 'd')
-}
 
 export default function SearchPage() {
     const [searchParams] = useSearchParams()
@@ -18,13 +10,8 @@ export default function SearchPage() {
     const query = searchParams.get('q')?.trim() ?? ''
     const [keyword, setKeyword] = useState(query)
 
-    const normalizedQuery = normalizeText(query)
-    const results = normalizedQuery
-        ? allArticles.filter((article) =>
-            [article.title, article.summary, article.category]
-                .some((value) => normalizeText(value).includes(normalizedQuery)),
-        )
-        : []
+    const { data, loading, error, refetch } = useApi(api.searchArticles, { q: query, limit: 100 })
+    const results = data?.items ?? []
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -60,9 +47,9 @@ export default function SearchPage() {
                     <button type="submit">Tìm kiếm</button>
                 </form>
 
-                {query && (
+                {query && data && (
                     <p className="education-page__intro" aria-live="polite">
-                        Từ khóa “{query}” · {results.length} kết quả
+                        Từ khóa “{query}” · {data.total} kết quả
                     </p>
                 )}
 
@@ -72,6 +59,15 @@ export default function SearchPage() {
                         <p className="search-page__hint">
                             Gợi ý: tuyển sinh, đại học, học bổng, kỳ thi...
                         </p>
+                    </div>
+                ) : loading ? (
+                    <div className="search-page__empty" role="status" aria-busy="true">
+                        <p>Đang tìm kiếm…</p>
+                    </div>
+                ) : error ? (
+                    <div className="search-page__empty" role="alert">
+                        <p>{error.message || 'Đã có lỗi xảy ra.'}</p>
+                        <button type="button" onClick={refetch}>Thử lại</button>
                     </div>
                 ) : results.length > 0 ? (
                     <div className="article-list">

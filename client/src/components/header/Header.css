@@ -195,7 +195,6 @@
   color: var(--yn-on-primary);
 }
 
-/* nút đổi sáng/tối */
 .header__theme {
   font: inherit;
   font-size: 16px;
@@ -234,7 +233,6 @@
   border-radius: 2px;
 }
 
-/* ---------- Nav + mega menu ---------- */
 .header__navwrap {
   position: relative;
 }
@@ -275,6 +273,104 @@
 .header__nav li a:hover {
   color: var(--yn-primary);
   background: var(--yn-hover);
+}
+.header__nav li.is-hover > a {
+  color: var(--yn-primary);
+  background: var(--yn-hover);
+}
+
+.header__hover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: 20;
+  background: var(--yn-bg);
+  border-bottom: 1px solid var(--yn-border);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  animation: hover-in 0.15s ease-out;
+}
+
+@keyframes hover-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.header__hover-inner {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 28px;
+  padding-top: 22px;
+  padding-bottom: 22px;
+}
+
+.header__hover-left {
+  border-right: 1px solid var(--yn-border);
+  padding-right: 20px;
+}
+
+.header .header__hover-title {
+  display: inline-block;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.header__hover-subs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 16px;
+}
+
+.header__hover-subs a {
+  display: block;
+  padding: 7px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yn-muted);
+}
+
+.header__hover-subs a:hover {
+  color: var(--yn-primary);
+}
+
+.header__hover-articles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.header__hover-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header__hover-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--yn-radius);
+}
+
+.header__hover-card span {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.header__hover-card:hover span {
+  color: var(--yn-primary);
+}
+
+@media (max-width: 900px) {
+  .header__hover { display: none; }
 }
 
 .header__nav li a.is-active {

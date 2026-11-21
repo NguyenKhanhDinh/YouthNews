@@ -1,19 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useEffect , useMemo, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { categories } from '../../data/categories'
+import { allArticles } from '../../data/seed'
 import Logo from '../Logo'
 import './Header.css'
 
-const NAV_VISIBLE = 4
+const NAV_VISIBLE = 8
+const MEGA_ARTICLES = 3
 
 const trending = [
     'Tuyển sinh đại học 2027: những điều thí sinh cần biết',
     'Sinh viên khởi nghiệp công nghệ gây quỹ thành công',
     'Giải bóng đá sinh viên toàn quốc khởi tranh',
 ]
-
+function buildMegaData() {
+    const byDate = [...allArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+    const data = {}
+    for (const c of categories) {
+        const list = byDate.filter((a) => a.categorySlug === c.slug)
+        data[c.slug] = {
+            subs: [...new Set(list.map((a) => a.category))],
+            latest: list.slice(0, MEGA_ARTICLES),
+        }
+    }
+    return data
+}
 function useTheme() {
     const [theme, setTheme] = useState(() => {
         try {
@@ -22,7 +35,6 @@ function useTheme() {
             return 'light'
         }
     })
-
     useEffect(() => {
         document.documentElement.dataset.theme = theme
         try {
@@ -41,6 +53,10 @@ export default function Header() {
     const { theme, toggleTheme } = useTheme()
     const [menuOpen, setMenuOpen] = useState(false)
     const [keyword, setKeyword] = useState('')
+    const [hoverSlug, setHoverSlug] = useState(null)
+    const megaData = useMemo(() => buildMegaData(), [])
+    const hoverCat = categories.find((c) => c.slug === hoverSlug)
+    const hoverData = hoverSlug ? megaData[hoverSlug] : null
 
     const today = new Date().toLocaleDateString('vi-VN', {
         weekday: 'long',
@@ -50,12 +66,20 @@ export default function Header() {
     })
 
     useEffect(() => {
-        const onKey = (e) => e.key === 'Escape' && setMenuOpen(false)
+        const onKey = (e) => {
+            if (e.key === 'Escape') {
+                setMenuOpen(false)
+                setHoverSlug(null)
+            }
+        }
         window.addEventListener('keydown', onKey)
         return () => window.removeEventListener('keydown', onKey)
     }, [])
 
-    const closeMenu = () => setMenuOpen(false)
+    const closeMenu = () => {
+        setMenuOpen(false)
+        setHoverSlug(null)
+    }
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -125,8 +149,7 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* Thanh chuyên mục + mega menu */}
-            <div className="header__navwrap">
+            <div className="header__navwrap" onMouseLeave={() => setHoverSlug(null)}>
                 <nav className="header__nav" aria-label="Chuyên mục">
                     <ul className="header__container">
                         <li>
@@ -137,7 +160,12 @@ export default function Header() {
                             </NavLink>
                         </li>
                         {categories.slice(0, NAV_VISIBLE).map((c) => (
-                            <li key={c.slug}>
+                            <li
+                                key={c.slug}
+                                className={hoverSlug === c.slug ? 'is-hover' : ''}
+                                onMouseEnter={() => setHoverSlug(c.slug)}
+                                onFocus={() => setHoverSlug(c.slug)}
+                            >
                                 <NavLink to={`/chuyen-muc/${c.slug}`} className={activeClass} onClick={closeMenu}>
                                     {c.name}
                                 </NavLink>
@@ -155,7 +183,34 @@ export default function Header() {
                         </li>
                     </ul>
                 </nav>
-
+                {hoverCat && hoverData && !menuOpen && (
+                    <div className="header__hover" role="region" aria-label={`Tin ${hoverCat.name}`}>
+                        <div className="header__container header__hover-inner">
+                            <div className="header__hover-left">
+                                <Link to={`/chuyen-muc/${hoverCat.slug}`} className="header__hover-title" onClick={closeMenu}>
+                                    {hoverCat.name}
+                                </Link>
+                                <ul className="header__hover-subs">
+                                    {hoverData.subs.map((sub) => (
+                                        <li key={sub}>
+                                            <Link to={`/chuyen-muc/${hoverCat.slug}?muc=${encodeURIComponent(sub)}`} onClick={closeMenu}>
+                                                {sub}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="header__hover-articles">
+                                {hoverData.latest.map((a) => (
+                                    <Link key={a.slug} to={`/bai-viet/${a.slug}`} className="header__hover-card" onClick={closeMenu}>
+                                        <img src={a.image} alt={a.imageAlt} loading="lazy" />
+                                        <span>{a.title}</span>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
                 {menuOpen && (
                     <div className="header__mega" id="mega-menu">
                         <div className="header__container header__mega-inner">
