@@ -10,6 +10,7 @@ import SearchPage from './pages/SearchPage'
 import HomePage from './pages/HomePage/HomePage.jsx'
 import ArticleDetailPage from './pages/articleDetailPage/ArticleDetailPage'
 import ForgotPassword from './pages/ForgotPassword'
+import NotFoundPage from './pages/notFoundPage/NotFoundPage'
 import './App.css'
 import {Route, Routes} from "react-router-dom";
 import BackToTop from './components/backToTop/BackToTop'
@@ -21,7 +22,6 @@ function App() {
             <main className="app__main">
                 <Routes>
                     <Route path = "/" element={<HomePage />} />
-                    <Route path="/" element={<EducationPage />} />
                     <Route path="/chuyen-muc/giao-duc" element={<EducationPage />} />
                     <Route path="/chuyen-muc/cong-nghe" element={<TechnologyPage />} />
                     <Route path="/chuyen-muc/doi-song" element={<LifestylePage />} />
@@ -32,7 +32,7 @@ function App() {
                         <Route path="/dang-ky" element={<Register />} />
                     </Route>
                     <Route path="/quen-mat-khau" element={<ForgotPassword />} />
-                    <Route path="*" element={<EducationPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </main>
             <Footer />
