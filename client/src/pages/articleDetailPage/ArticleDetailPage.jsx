@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import {Fragment, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { api, useApi } from '../../api'
 import { categories } from '../../data/categories'
 import ArticleCard from '../../components/article/ArticleCard'
+import AdSlot from '../../components/ads/AdSlot'
 import './ArticleDetailPage.css'
 
 export default function ArticleDetailPage() {
@@ -94,7 +95,10 @@ export default function ArticleDetailPage() {
                 <div className="article-detail__layout">
                     <div className="article-detail__body">
                         {article.content.map((paragraph, index) => (
-                            <p key={`${article.slug}-${index}`}>{paragraph}</p>
+                            <Fragment key={`${article.slug}-${index}`}>
+                                <p>{paragraph}</p>
+                                {index === 1 && article.content.length > 3 && <AdSlot slot="leaderboard" index={2} />}
+                            </Fragment>
                         ))}
                     </div>
 
