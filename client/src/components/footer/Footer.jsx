@@ -70,6 +70,9 @@ export default function Footer() {
                         <li>
                             <Link to="/video">Video</Link>
                         </li>
+                        <li>
+                            <Link to="/podcast">Podcast</Link>
+                        </li>
                     </ul>
                 </nav>
 

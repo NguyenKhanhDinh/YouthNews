@@ -222,6 +222,9 @@ export default function Header() {
                             <Link to="/video" onClick={closeMenu}>
                                 Video
                             </Link>
+                            <Link to="/podcast" onClick={closeMenu}>
+                                Podcast
+                            </Link>
                         </div>
                     </div>
                 )}
