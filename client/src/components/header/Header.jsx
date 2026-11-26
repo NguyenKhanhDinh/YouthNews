@@ -225,6 +225,9 @@ export default function Header() {
                             <Link to="/podcast" onClick={closeMenu}>
                                 Podcast
                             </Link>
+                            <Link to="/magazine" onClick={closeMenu}>
+                                Magazine
+                            </Link>
                         </div>
                     </div>
                 )}

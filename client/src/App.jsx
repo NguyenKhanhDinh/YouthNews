@@ -16,6 +16,8 @@ import VideoPage from './pages/videoPage/VideoPage'
 import VideoDetailPage from './pages/videoPage/VideoDetailPage'
 import PodcastPage from "./pages/podcastPage/PodcastPage.jsx";
 import PodcastDetailPage from "./pages/podcastPage/PodcastDetailPage.jsx";
+import MagazinePage from "./pages/magazinePage/MagezinePage.jsx";
+import MagazineDetailPage from "./pages/magazinePage/MagazineDetailPage.jsx";
 import './App.css'
 import {Route, Routes} from "react-router-dom";
 import BackToTop from './components/backToTop/BackToTop'
@@ -35,6 +37,8 @@ function App() {
                     <Route path="/video/:slug" element={<VideoDetailPage />} />
                     <Route path="/podcast" element={<PodcastPage />} />
                     <Route path="/podcast/:slug" element={<PodcastDetailPage />} />
+                    <Route path="/magazine" element={<MagazinePage />} />
+                    <Route path="/magazine/:slug" element={<MagazineDetailPage />} />
                     <Route path="/tim-kiem" element={<SearchPage />} />
                     <Route path="/bai-viet/:slug" element={<ArticleDetailPage />} />
                     <Route element={<AuthLayout />}>

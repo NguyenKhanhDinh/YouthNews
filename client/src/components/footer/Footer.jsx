@@ -73,6 +73,9 @@ export default function Footer() {
                         <li>
                             <Link to="/podcast">Podcast</Link>
                         </li>
+                        <li>
+                            <Link to="/magazine">Magazine</Link>
+                        </li>
                     </ul>
                 </nav>
 
