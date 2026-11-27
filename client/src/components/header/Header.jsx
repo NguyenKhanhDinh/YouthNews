@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { categories } from '../../data/categories'
 import { allArticles } from '../../data/seed'
+import { videos } from '../../data/videos'
+import { podcasts } from '../../data/podcasts'
+import { magazines } from '../../data/magazines'
 import Logo from '../Logo'
 import './Header.css'
 
@@ -15,15 +18,72 @@ const trending = [
     'Sinh viên khởi nghiệp công nghệ gây quỹ thành công',
     'Giải bóng đá sinh viên toàn quốc khởi tranh',
 ]
+const EXTRA_ENTRIES = [
+    { slug: 'video', name: 'Video', to: '/video' },
+    { slug: 'podcast', name: 'Podcast', to: '/podcast' },
+    { slug: 'magazine', name: 'Magazine', to: '/magazine' },
+]
+const NAV_ENTRIES = [
+    ...categories.map((c) => ({ slug: c.slug, name: c.name, to: `/chuyen-muc/${c.slug}` })),
+    ...EXTRA_ENTRIES,
+]
+
+const newest = (list) => [...list].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+
 function buildMegaData() {
-    const byDate = [...allArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+    const byDate = newest(allArticles)
     const data = {}
     for (const c of categories) {
         const list = byDate.filter((a) => a.categorySlug === c.slug)
         data[c.slug] = {
-            subs: [...new Set(list.map((a) => a.category))],
-            latest: list.slice(0, MEGA_ARTICLES),
+            subs: [...new Set(list.map((a) => a.category))].map((sub) => ({
+                label: sub,
+                to: `/chuyen-muc/${c.slug}?muc=${encodeURIComponent(sub)}`,
+            })),
+            latest: list.slice(0, MEGA_ARTICLES).map((a) => ({
+                to: `/bai-viet/${a.slug}`,
+                title: a.title,
+                image: a.image,
+                alt: a.imageAlt,
+            })),
         }
+    }
+
+    const videoCats = [...new Set(videos.map((v) => v.categorySlug))]
+    data.video = {
+        subs: videoCats.map((slug) => ({
+            label: categories.find((c) => c.slug === slug)?.name ?? slug,
+            to: `/video?chuyen-muc=${slug}`,
+        })),
+        latest: newest(videos).slice(0, MEGA_ARTICLES).map((v) => ({
+            to: `/video/${v.slug}`,
+            title: v.title,
+            image: `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`,
+            alt: v.title,
+        })),
+    }
+
+    data.podcast = {
+        subs: [...new Set(podcasts.map((p) => p.show))].map((show) => ({
+            label: show,
+            to: `/podcast?chuong-trinh=${encodeURIComponent(show)}`,
+        })),
+        latest: newest(podcasts).slice(0, MEGA_ARTICLES).map((p) => ({
+            to: `/podcast/${p.slug}`,
+            title: p.title,
+            theme: p.theme,
+            label: `${p.show} · Tập ${p.episode}`,
+        })),
+    }
+
+    data.magazine = {
+        subs: [],
+        latest: newest(magazines).slice(0, MEGA_ARTICLES).map((m) => ({
+            to: `/magazine/${m.slug}`,
+            title: m.title,
+            image: m.cover,
+            alt: m.title,
+        })),
     }
     return data
 }
@@ -55,7 +115,7 @@ export default function Header() {
     const [keyword, setKeyword] = useState('')
     const [hoverSlug, setHoverSlug] = useState(null)
     const megaData = useMemo(() => buildMegaData(), [])
-    const hoverCat = categories.find((c) => c.slug === hoverSlug)
+    const hoverEntry = NAV_ENTRIES.find((e) => e.slug === hoverSlug)
     const hoverData = hoverSlug ? megaData[hoverSlug] : null
 
     const today = new Date().toLocaleDateString('vi-VN', {
@@ -90,6 +150,46 @@ export default function Header() {
     }
 
     const activeClass = ({ isActive }) => (isActive ? 'is-active' : '')
+
+    const renderHover = (inline = false) =>
+        hoverEntry && hoverData && (
+            <div
+                className={`header__hover${inline ? ' header__hover--inline' : ''}`}
+                role="region"
+                aria-label={`Nội dung ${hoverEntry.name}`}
+            >
+                <div className="header__container header__hover-inner">
+                    <div className="header__hover-left">
+                        <Link to={hoverEntry.to} className="header__hover-title" onClick={closeMenu}>
+                            {hoverEntry.name}
+                        </Link>
+                        {hoverData.subs.length > 0 && (
+                            <ul className="header__hover-subs">
+                                {hoverData.subs.map((sub) => (
+                                    <li key={sub.to}>
+                                        <Link to={sub.to} onClick={closeMenu}>
+                                            {sub.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                    <div className="header__hover-articles">
+                        {hoverData.latest.map((a) => (
+                            <Link key={a.to} to={a.to} className="header__hover-card" onClick={closeMenu}>
+                                {a.image ? (
+                                    <img src={a.image} alt={a.alt} loading="lazy" />
+                                ) : (
+                                    <div className={`header__hover-cover header__hover-cover--${a.theme}`}>{a.label}</div>
+                                )}
+                                <span>{a.title}</span>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
 
     return (
         <header className="header">
@@ -183,57 +283,28 @@ export default function Header() {
                         </li>
                     </ul>
                 </nav>
-                {hoverCat && hoverData && !menuOpen && (
-                    <div className="header__hover" role="region" aria-label={`Tin ${hoverCat.name}`}>
-                        <div className="header__container header__hover-inner">
-                            <div className="header__hover-left">
-                                <Link to={`/chuyen-muc/${hoverCat.slug}`} className="header__hover-title" onClick={closeMenu}>
-                                    {hoverCat.name}
-                                </Link>
-                                <ul className="header__hover-subs">
-                                    {hoverData.subs.map((sub) => (
-                                        <li key={sub}>
-                                            <Link to={`/chuyen-muc/${hoverCat.slug}?muc=${encodeURIComponent(sub)}`} onClick={closeMenu}>
-                                                {sub}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div className="header__hover-articles">
-                                {hoverData.latest.map((a) => (
-                                    <Link key={a.slug} to={`/bai-viet/${a.slug}`} className="header__hover-card" onClick={closeMenu}>
-                                        <img src={a.image} alt={a.imageAlt} loading="lazy" />
-                                        <span>{a.title}</span>
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                )}
+                {!menuOpen && renderHover()}
                 {menuOpen && (
                     <div className="header__mega" id="mega-menu">
                         <div className="header__container header__mega-inner">
-                            {categories.map((c) => (
-                                <Link key={c.slug} to={`/chuyen-muc/${c.slug}`} onClick={closeMenu}>
-                                    {c.name}
+                            {NAV_ENTRIES.map((e) => (
+                                <Link
+                                    key={e.slug}
+                                    to={e.to}
+                                    className={hoverSlug === e.slug ? 'is-hover' : ''}
+                                    onMouseEnter={() => setHoverSlug(e.slug)}
+                                    onFocus={() => setHoverSlug(e.slug)}
+                                    onClick={closeMenu}
+                                >
+                                    {e.name}
                                 </Link>
                             ))}
-                            <Link to="/video" onClick={closeMenu}>
-                                Video
-                            </Link>
-                            <Link to="/podcast" onClick={closeMenu}>
-                                Podcast
-                            </Link>
-                            <Link to="/magazine" onClick={closeMenu}>
-                                Magazine
-                            </Link>
                         </div>
+                        {renderHover(true)}
                     </div>
                 )}
             </div>
 
-            {/* Dòng tin nóng */}
             <div className="header__ticker">
                 <div className="header__container header__ticker-inner">
                     <span className="header__ticker-label">Tin nóng</span>
