@@ -58,7 +58,6 @@
   padding: 0 16px;
 }
 
-/* ---------- Topbar ---------- */
 .header__topbar {
   background: var(--yn-surface);
   border-bottom: 1px solid var(--yn-border);
@@ -86,7 +85,6 @@
   color: var(--yn-primary);
 }
 
-/* ---------- Main bar ---------- */
 .header__main-inner {
   display: flex;
   align-items: center;
@@ -430,11 +428,35 @@
   border-bottom: 1px solid var(--yn-border);
 }
 
-.header__mega-inner a:hover {
+.header__mega-inner a:hover,
+.header__mega-inner a.is-hover {
   color: var(--yn-primary);
 }
 
-/* ---------- Ticker tin nóng ---------- */
+.header__hover--inline {
+  position: static;
+  box-shadow: none;
+  border-top: 1px solid var(--yn-border);
+  border-bottom: 0;
+  animation: none;
+}
+
+.header__hover-cover {
+  display: flex;
+  align-items: flex-end;
+  aspect-ratio: 16 / 10;
+  padding: 12px;
+  border-radius: var(--yn-radius);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.header__hover-cover--blue { background: linear-gradient(135deg, #0b5cad, #08457f); }
+.header__hover-cover--green { background: linear-gradient(135deg, #12795a, #0b5640); }
+.header__hover-cover--dark { background: linear-gradient(135deg, #2b3340, #161b22); }
+
 .header__ticker {
   background: var(--yn-bg);
   border-bottom: 1px solid var(--yn-border);
@@ -489,7 +511,6 @@
   color: var(--yn-primary);
 }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .header__search {
     width: 220px;
