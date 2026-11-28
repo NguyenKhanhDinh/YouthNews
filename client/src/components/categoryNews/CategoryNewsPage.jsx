@@ -1,22 +1,27 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ArticleCard from '../article/ArticleCard'
 import AdSlot from '../ads/AdSlot'
 import './CategoryNewsPage.css'
 
-export default function CategoryNewsPage({ name, eyebrow, intro, topics, articles }) {
-    const [selectedTopic, setSelectedTopic] = useState('Tất cả')
+export default function CategoryNewsPage({
+    categorySlug,
+    name,
+    eyebrow,
+    intro,
+    topics,
+    articles,
+    selectedSubCategory,
+    onLoadMore,
+    hasMore,
+    loadingMore,
+    loadMoreError,
+}) {
     const [featuredStory, ...remainingStories] = articles
     const secondaryStories = remainingStories.slice(0, 2)
     const popularStories = remainingStories.slice(2, 5)
-
-    const filteredArticles =
-        selectedTopic === 'Tất cả'
-            ? articles
-            : articles.filter((article) => article.category === selectedTopic)
-
-    const latestArticles =
-        selectedTopic === 'Tất cả' ? filteredArticles.slice(3) : filteredArticles
+    const isSubCategoryPage = Boolean(selectedSubCategory)
+    const latestArticles = isSubCategoryPage ? articles : articles.slice(3)
+    const categoryPath = `/chuyen-muc/${categorySlug}`
 
     return (
         <div className="category-news">
@@ -24,32 +29,48 @@ export default function CategoryNewsPage({ name, eyebrow, intro, topics, article
                 <div className="category-news__breadcrumb">
                     <Link to="/">Trang chủ</Link>
                     <span aria-hidden="true">/</span>
-                    <span>{name}</span>
+                    {isSubCategoryPage && (
+                        <>
+                            <Link to={categoryPath}>{name}</Link>
+                            <span aria-hidden="true">/</span>
+                        </>
+                    )}
+                    <span aria-current="page">{selectedSubCategory?.name ?? name}</span>
                 </div>
 
                 <section className="category-news__heading" aria-labelledby="category-title">
                     <div>
                         <p className="category-news__eyebrow">{eyebrow}</p>
-                        <h1 id="category-title">{name}</h1>
+                        <h1 id="category-title">{selectedSubCategory?.name ?? name}</h1>
                     </div>
-                    <p className="category-news__intro">{intro}</p>
+                    <p className="category-news__intro">
+                        {selectedSubCategory
+                            ? `Tin ${selectedSubCategory.name.toLowerCase()} mới nhất thuộc chuyên mục ${name}.`
+                            : intro}
+                    </p>
                 </section>
 
                 <nav className="category-news__topics" aria-label={`Chủ đề ${name.toLowerCase()}`}>
-                    {['Tất cả', ...topics].map((topic) => (
-                        <button
-                            type="button"
-                            className={selectedTopic === topic ? 'is-selected' : ''}
-                            key={topic}
-                            onClick={() => setSelectedTopic(topic)}
-                            aria-pressed={selectedTopic === topic}
+                    <Link
+                        className={!isSubCategoryPage ? 'is-selected' : ''}
+                        to={categoryPath}
+                        aria-current={!isSubCategoryPage ? 'page' : undefined}
+                    >
+                        Tất cả
+                    </Link>
+                    {topics.map((topic) => (
+                        <Link
+                            className={selectedSubCategory?.slug === topic.slug ? 'is-selected' : ''}
+                            key={topic.slug}
+                            to={`${categoryPath}/${topic.slug}`}
+                            aria-current={selectedSubCategory?.slug === topic.slug ? 'page' : undefined}
                         >
-                            {topic}
-                        </button>
+                            {topic.name}
+                        </Link>
                     ))}
                 </nav>
 
-                {selectedTopic === 'Tất cả' && (
+                {!isSubCategoryPage && featuredStory && (
                     <>
                         <article className="category-news__featured">
                             <Link
@@ -103,12 +124,10 @@ export default function CategoryNewsPage({ name, eyebrow, intro, topics, article
                     <section className="category-news__latest" id="tin-moi" aria-labelledby="latest-title">
                         <div className="category-news__section-heading">
                             <h2 id="latest-title">
-                                {selectedTopic === 'Tất cả' ? 'Tin mới' : selectedTopic}
+                                {isSubCategoryPage ? `Tin ${selectedSubCategory.name}` : 'Tin mới'}
                             </h2>
-                            {selectedTopic !== 'Tất cả' && (
-                                <button type="button" onClick={() => setSelectedTopic('Tất cả')}>
-                                    Xem tất cả
-                                </button>
+                            {isSubCategoryPage && (
+                                <Link to={categoryPath}>Xem tất cả</Link>
                             )}
                         </div>
 
@@ -120,8 +139,26 @@ export default function CategoryNewsPage({ name, eyebrow, intro, topics, article
                             </div>
                         ) : (
                             <p className="category-news__empty" role="status">
-                                Chưa có bài viết nào thuộc chủ đề “{selectedTopic}”.
+                                Chưa có bài viết nào thuộc {selectedSubCategory ? `chủ đề “${selectedSubCategory.name}”` : `chuyên mục ${name}`}.
                             </p>
+                        )}
+                        {loadMoreError && (
+                            <div className="category-news__load-error" role="alert">
+                                <p>{loadMoreError.message || 'Không thể tải thêm bài viết.'}</p>
+                                <button type="button" onClick={onLoadMore} disabled={loadingMore}>
+                                    Thử lại
+                                </button>
+                            </div>
+                        )}
+                        {hasMore && (
+                            <button
+                                className="category-news__load-more"
+                                type="button"
+                                onClick={onLoadMore}
+                                disabled={loadingMore}
+                            >
+                                {loadingMore ? 'Đang tải…' : 'Xem thêm bài viết'}
+                            </button>
                         )}
                     </section>
 

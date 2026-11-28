@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { categories } from '../../data/categories'
-import { allArticles } from '../../data/seed'
+import { allArticles, slugify } from '../../data/seed'
 import { videos } from '../../data/videos'
 import { podcasts } from '../../data/podcasts'
 import { magazines } from '../../data/magazines'
@@ -32,7 +32,7 @@ function buildMegaData() {
         data[c.slug] = {
             subs: [...new Set(list.map((a) => a.category))].map((sub) => ({
                 label: sub,
-                to: `/chuyen-muc/${c.slug}?muc=${encodeURIComponent(sub)}`,
+                to: `/chuyen-muc/${c.slug}/${slugify(sub)}`,
             })),
             latest: list.slice(0, MEGA_ARTICLES).map((a) => ({
                 to: `/bai-viet/${a.slug}`,
@@ -244,6 +244,17 @@ export default function Header() {
                     </form>
 
                     <Link to="/dang-nhap" className="header__login">Đăng nhập</Link>
+                    <Link
+                        to="/tin-da-luu"
+                        className="header__saved"
+                        aria-label="Tin đã lưu"
+                        title="Tin đã lưu"
+                    >
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-4-6 4z" />
+                        </svg>
+                        <span>Tin đã lưu</span>
+                    </Link>
 
                     <button
                         className="header__theme"

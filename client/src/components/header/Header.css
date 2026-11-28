@@ -192,6 +192,26 @@
   color: var(--yn-on-primary);
 }
 
+.header__saved {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--yn-primary) !important;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.header__saved:hover {
+  color: var(--yn-primary-dark) !important;
+}
+
+.header__saved:focus-visible {
+  outline: 2px solid var(--yn-primary);
+  outline-offset: 4px;
+}
+
 .header__theme {
   font: inherit;
   font-size: 16px;
@@ -308,7 +328,7 @@
 
 .header .header__hover-title {
   display: inline-block;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: inherit;
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 16px;
@@ -352,7 +372,7 @@
 }
 
 .header__hover-card span {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: inherit;
   font-size: 15px;
   font-weight: 600;
   line-height: 1.4;
@@ -536,6 +556,24 @@
   .header__login,
   .header .logo__tagline {
     display: none;
+  }
+
+  .header__saved {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    border: 1px solid var(--yn-border-strong);
+    border-radius: 50%;
+  }
+
+  .header__saved span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
   }
 
   .header .logo__mark {

@@ -39,6 +39,66 @@ const raw = [
     ['doi-song', 'Ẩm thực', 'Bữa sáng nhanh gọn cho người bận rộn', 'Gợi ý thực đơn có thể chuẩn bị trong chưa đầy 15 phút.'],
     ['doi-song', 'Du lịch', 'Du lịch bụi cuối năm: lên kế hoạch gọn nhẹ mà vẫn thoải mái', 'Cách chia ngân sách, chọn lịch trình và chuẩn bị hành lý cho chuyến đi ngắn ngày.'],
     ['doi-song', 'Nhà ở', 'Sắp xếp góc học tập nhỏ gọn trong phòng trọ', 'Ánh sáng, bàn ghế và cách bố trí quyết định phần lớn hiệu quả làm việc.'],
+    ['doi-song', 'Cộng đồng', 'Tổ chức hoạt động cộng đồng nhỏ: bắt đầu từ nhu cầu quanh mình', 'Một kế hoạch vừa sức và sự phối hợp rõ ràng giúp nhóm tình nguyện duy trì hoạt động lâu dài.', [
+        'Một hoạt động cộng đồng thiết thực thường bắt đầu bằng việc lắng nghe người sẽ tham gia hoặc nhận hỗ trợ. Thay vì chọn một chương trình thật lớn, nhóm có thể xác định một nhu cầu cụ thể trong khu dân cư và hỏi xem mọi người đang cần điều gì.',
+        'Sau khi thống nhất mục tiêu, hãy chia công việc thành những phần rõ ràng như liên hệ địa điểm, chuẩn bị vật dụng và thông báo thời gian. Một bảng phân công đơn giản giúp mỗi người biết mình phụ trách việc gì.',
+        'Nhóm cũng nên dự trù chi phí và thống nhất cách tiếp nhận, sử dụng nguồn đóng góp. Thông tin minh bạch giúp các thành viên yên tâm và dễ phối hợp hơn.',
+        'Kết thúc hoạt động, dành thời gian ghi nhận điều đã làm được và những điểm cần điều chỉnh. Việc giữ liên lạc với cộng đồng sẽ giúp lần tổ chức tiếp theo phù hợp hơn với nhu cầu thực tế.',
+    ]],
+    ['doi-song', 'Cộng đồng', 'Góc trao đổi đồ dùng giúp kéo dài vòng đời vật dụng', 'Một điểm chia sẻ trong khu phố có thể kết nối người còn cần đồ dùng với người muốn trao tặng.', [
+        'Nhiều món đồ vẫn còn sử dụng tốt nhưng không còn phù hợp với chủ cũ. Một góc trao đổi nhỏ tại khu dân cư, trường học hoặc câu lạc bộ có thể giúp những vật dụng ấy tìm được người cần.',
+        'Để việc chia sẻ thuận tiện, người tặng nên mô tả tình trạng món đồ và chỉ nhận trao đổi những vật dụng sạch, an toàn. Nhóm điều phối có thể thống nhất trước các loại đồ được nhận để tránh phát sinh khó khăn khi lưu trữ.',
+        'Thông tin về thời gian, địa điểm và cách nhận đồ cần được đăng rõ ràng. Nếu số lượng nhiều, có thể hẹn khung giờ cụ thể để mọi người không phải chờ lâu.',
+        'Mô hình này không thay thế hoạt động hỗ trợ chuyên nghiệp, nhưng tạo thêm cơ hội kết nối và sử dụng đồ dùng hợp lý hơn. Bắt đầu ở quy mô nhỏ giúp nhóm dễ theo dõi và điều chỉnh cách tổ chức.',
+    ]],
+    ['doi-song', 'Gia đình', 'Chia việc nhà hợp lý để mọi thành viên cùng chủ động', 'Thống nhất đầu việc theo thời gian và khả năng giúp việc nhà bớt dồn lên một người.', [
+        'Việc nhà thường dễ trở thành áp lực nếu chỉ một thành viên ghi nhớ và thực hiện mọi thứ. Cả gia đình có thể cùng liệt kê những việc cần làm trong tuần, sau đó thống nhất cách chia phù hợp với lịch sinh hoạt của từng người.',
+        'Danh sách nên cụ thể, chẳng hạn ai chuẩn bị bữa tối vào ngày nào hoặc thời điểm nào cả nhà cùng dọn dẹp. Trẻ nhỏ có thể tham gia những việc đơn giản, an toàn và phù hợp với độ tuổi.',
+        'Lịch phân công không cần cứng nhắc. Khi có người bận hoặc phát sinh việc đột xuất, các thành viên có thể đổi phần việc cho nhau và cập nhật lại kế hoạch.',
+        'Một cuộc trao đổi ngắn vào cuối tuần giúp gia đình xem cách sắp xếp hiện tại có thuận tiện không. Mục tiêu là cùng chia sẻ trách nhiệm, không phải chấm điểm hay tạo thêm áp lực.',
+    ]],
+    ['doi-song', 'Gia đình', 'Tạo khoảng thời gian không màn hình để cả nhà trò chuyện', 'Một thói quen nhỏ trong ngày giúp các thành viên có thêm cơ hội lắng nghe nhau.', [
+        'Điện thoại và máy tính thường xuất hiện trong nhiều hoạt động thường ngày. Gia đình có thể thử chọn một khoảng thời gian ngắn, chẳng hạn trong bữa ăn, để mọi người tạm cất thiết bị và tập trung trò chuyện.',
+        'Để thói quen mới dễ duy trì, các thành viên nên cùng thống nhất thời điểm và cùng làm gương. Có thể bắt đầu vài buổi mỗi tuần thay vì đặt ra quy tắc quá khó thực hiện.',
+        'Một câu hỏi mở về điều thú vị trong ngày hoặc kế hoạch cuối tuần có thể giúp cuộc trò chuyện tự nhiên hơn. Người nghe nên tạo không gian để mỗi thành viên chia sẻ theo cách riêng.',
+        'Nếu lịch sinh hoạt không trùng nhau, gia đình có thể chọn một hoạt động khác như đi bộ hoặc cùng chuẩn bị bữa ăn. Điều quan trọng là dành sự chú ý cho nhau trong khoảng thời gian đã chọn.',
+    ]],
+    ['doi-song', 'Ẩm thực', 'Chuẩn bị bữa trưa mang theo với thực đơn linh hoạt', 'Lên danh sách nguyên liệu và sơ chế trước giúp tiết kiệm thời gian vào những ngày bận rộn.', [
+        'Bữa trưa mang theo sẽ dễ chuẩn bị hơn khi thực đơn được chọn dựa trên lịch trình và điều kiện bảo quản. Có thể bắt đầu bằng những món quen thuộc, sử dụng nguyên liệu dễ tìm và không đòi hỏi nhiều bước chế biến.',
+        'Trước khi đi mua sắm, hãy kiểm tra thực phẩm sẵn có và ghi lại phần còn thiếu. Sơ chế một số nguyên liệu từ trước giúp rút ngắn thời gian nấu, nhưng cần bảo quản riêng và phù hợp với hướng dẫn an toàn thực phẩm.',
+        'Hộp đựng nên sạch, kín và có kích thước vừa với khẩu phần dự định. Nếu nơi làm việc hoặc trường học không có điều kiện giữ lạnh, hãy chọn món phù hợp với thời gian di chuyển và nhiệt độ môi trường.',
+        'Không cần chuẩn bị một thực đơn cố định cho cả tuần. Thay đổi món theo sở thích và nguyên liệu sẵn có giúp việc nấu ăn linh hoạt, tránh lãng phí thực phẩm.',
+    ]],
+    ['doi-song', 'Ẩm thực', 'Đọc nhãn thực phẩm khi lựa chọn món ăn đóng gói', 'Quan sát thành phần, hướng dẫn bảo quản và hạn sử dụng giúp người mua hiểu rõ sản phẩm hơn.', [
+        'Khi chọn thực phẩm đóng gói, người mua có thể bắt đầu bằng việc xem tên sản phẩm, danh sách thành phần và thông tin dị ứng được công bố trên bao bì. Những mục này giúp nhận biết sản phẩm có phù hợp với nhu cầu cá nhân hay không.',
+        'Bảng thông tin dinh dưỡng nên được đọc theo khẩu phần ghi trên nhãn. Hai sản phẩm chỉ có thể so sánh hợp lý khi quy đổi về cùng lượng dùng, thay vì nhìn riêng một con số nổi bật.',
+        'Hãy kiểm tra hạn sử dụng, tình trạng bao bì và hướng dẫn bảo quản trước khi mua. Sau khi mở gói, cần làm theo chỉ dẫn của nhà sản xuất và không dùng sản phẩm có dấu hiệu bất thường.',
+        'Nhãn thực phẩm cung cấp thông tin để tham khảo, không thay thế tư vấn chuyên môn cho người có nhu cầu dinh dưỡng đặc biệt. Khi cần thiết, hãy trao đổi với chuyên gia y tế hoặc dinh dưỡng.',
+    ]],
+    ['doi-song', 'Du lịch', 'Lên lịch trình cuối tuần vừa đủ để chuyến đi không quá vội', 'Chọn ít điểm đến và chừa thời gian nghỉ giúp lịch trình linh hoạt hơn.', [
+        'Một chuyến đi ngắn sẽ thoải mái hơn khi lịch trình ưu tiên những trải nghiệm thật sự muốn thử. Thay vì xếp quá nhiều điểm trong một ngày, hãy chọn một khu vực chính và kiểm tra thời gian di chuyển giữa các địa điểm.',
+        'Trước khi khởi hành, nên xác nhận giờ mở cửa, phương tiện và nơi lưu trú từ kênh chính thức. Dự trù một khoản cho các chi phí phát sinh giúp kế hoạch không bị phụ thuộc vào một mức chi cố định.',
+        'Hành lý gọn nhẹ giúp việc di chuyển dễ dàng hơn. Danh sách đồ cần mang nên dựa trên thời tiết, thời lượng chuyến đi và hoạt động dự định, tránh mang theo những món ít có khả năng sử dụng.',
+        'Hãy để một khoảng trống trong lịch trình để nghỉ ngơi hoặc thay đổi kế hoạch khi cần. Tôn trọng quy định tại điểm đến và giữ gìn không gian chung cũng góp phần tạo trải nghiệm tốt cho mọi người.',
+    ]],
+    ['doi-song', 'Du lịch', 'Chọn phương tiện phù hợp cho chuyến đi ngắn', 'So sánh thời gian, chi phí và điểm đón trả giúp lựa chọn cách di chuyển sát nhu cầu.', [
+        'Với chuyến đi ngắn, phương tiện phù hợp phụ thuộc vào quãng đường, số người và lượng hành lý. Người đi có thể so sánh thời gian tổng thể, bao gồm cả quãng đường đến bến hoặc điểm đón.',
+        'Thông tin về giờ chạy, giá vé và điều kiện đổi trả nên được kiểm tra trên website hoặc ứng dụng chính thức của đơn vị vận chuyển. Đặt chỗ sớm không đồng nghĩa mọi phương án đều linh hoạt, vì vậy hãy đọc kỹ điều kiện trước khi thanh toán.',
+        'Nếu tự lái xe, cần tính cả thời gian nghỉ và tìm hiểu quy định giao thông tại nơi đến. Với phương tiện công cộng, hãy chuẩn bị phương án kết nối cho chặng cuối để tránh bị động.',
+        'Khi đã chọn phương tiện, lưu lại xác nhận đặt chỗ và địa chỉ cần thiết ở nơi dễ truy cập. Một kế hoạch dự phòng đơn giản sẽ hữu ích nếu lịch trình thay đổi.',
+    ]],
+    ['doi-song', 'Nhà ở', 'Giữ phòng trọ gọn gàng với lịch dọn dẹp ngắn mỗi ngày', 'Chia việc thành những khoảng nhỏ giúp căn phòng dễ duy trì ngăn nắp hơn.', [
+        'Một căn phòng nhỏ thường nhanh bừa bộn khi đồ dùng không có vị trí cố định. Hãy bắt đầu bằng cách chọn chỗ để cho những vật thường dùng như chìa khóa, giấy tờ và đồ học tập.',
+        'Thay vì chờ đến cuối tuần mới dọn toàn bộ, có thể dành vài phút mỗi ngày để trả đồ về chỗ cũ, gom rác và lau khu vực vừa sử dụng. Việc chia nhỏ giúp lịch dọn dẹp ít gây áp lực hơn.',
+        'Đồ ít dùng nên được phân loại trước khi mua thêm hộp hoặc kệ lưu trữ. Tận dụng không gian theo chiều đứng có thể hữu ích, nhưng cần đặt vật nặng chắc chắn và không cản lối đi.',
+        'Mỗi phòng có diện tích và cách sinh hoạt khác nhau, vì vậy hãy thử một cách sắp xếp trong vài ngày rồi điều chỉnh. Mục tiêu là thuận tiện cho người ở, không phải tạo ra một căn phòng chỉ để trưng bày.',
+    ]],
+    ['doi-song', 'Nhà ở', 'Chọn đèn bàn phù hợp cho góc học tập nhỏ', 'Vị trí đặt đèn, độ ổn định và cách sử dụng đều ảnh hưởng đến sự thoải mái khi học.', [
+        'Khi bố trí đèn bàn, hãy quan sát hướng viết và vị trí ngồi để hạn chế bóng đổ lên khu vực làm việc. Đèn cần đặt chắc chắn, không chiếm quá nhiều diện tích và có thể điều chỉnh hướng chiếu khi cần.',
+        'Người mua nên xem thông tin về độ sáng, màu ánh sáng và hướng dẫn sử dụng của sản phẩm. Nếu có thể, hãy thử đèn trong không gian thực tế để biết ánh sáng có phù hợp với mắt và mặt bàn hay không.',
+        'Kết hợp đèn bàn với ánh sáng chung trong phòng thường giúp không gian cân bằng hơn thay vì chỉ dùng một nguồn sáng mạnh. Màn hình cũng nên được đặt để giảm phản chiếu trực tiếp.',
+        'Thói quen nghỉ mắt và điều chỉnh tư thế vẫn quan trọng khi học lâu. Đèn phù hợp hỗ trợ góc học tập, nhưng không thay thế việc bố trí bàn ghế và thời gian nghỉ hợp lý.',
+    ]],
 
     ['the-thao', 'Bóng đá', 'Giải bóng đá sinh viên khởi tranh với nhiều đội bóng mới', 'Các trường đại học bước vào mùa giải với đội hình được làm mới.'],
     ['the-thao', 'Thể thao sinh viên', 'Hội thao sinh viên: nơi những tài năng trẻ tỏa sáng', 'Hàng trăm vận động viên cùng tranh tài ở nhiều bộ môn.'],
@@ -129,7 +189,7 @@ const AUTHORS = {
 
 const NOW = new Date(2026, 10, 19, 9, 0, 0)
 
-const extra = raw.map(([categorySlug, category, title, summary], i) => {
+const extra = raw.map(([categorySlug, category, title, summary, content], i) => {
     const slug = slugify(title).slice(0, 80)
     // Rải bài theo thời gian, xen kẽ chuyên mục để hero có nhiều chuyên mục
     const publishedAt = new Date(NOW.getTime() - ((i % 7) * 9 + Math.floor(i / 7) * 2) * HOUR)
@@ -143,7 +203,7 @@ const extra = raw.map(([categorySlug, category, title, summary], i) => {
         imageAlt: title,
         author: AUTHORS[categorySlug],
         readTime: `${3 + (hash(slug) % 5)} phút đọc`,
-        content: [summary, ...bodyByCategory[categorySlug]],
+        content: content ?? [summary, ...bodyByCategory[categorySlug]],
         publishedAt: publishedAt.toISOString(),
         date: formatDate(publishedAt),
     }
