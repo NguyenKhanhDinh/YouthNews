@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import ArticleCard from '../components/article/ArticleCard'
 import { api, useApi } from '../api'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import './educationPage/EducationPage.css'
 
 export default function SearchPage() {
@@ -12,6 +13,8 @@ export default function SearchPage() {
 
     const { data, loading, error, refetch } = useApi(api.searchArticles, { q: query, limit: 100 })
     const results = data?.items ?? []
+
+    useDocumentTitle(query ? `Tìm kiếm: ${query}` : 'Tìm kiếm')
 
     const handleSubmit = (e) => {
         e.preventDefault()

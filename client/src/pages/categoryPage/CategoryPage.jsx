@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import CategoryNewsPage from '../../components/categoryNews/CategoryNewsPage'
 import NotFoundPage from '../notFoundPage/NotFoundPage'
 import { api, useApi } from '../../api'
+import useDocumentTitle from '../../hooks/useDocumentTitle'
 import '../educationPage/EducationPage.css'
 import '../HomePage/HomePage.css'
 
@@ -27,6 +28,8 @@ function CategoryPageContent({ slug, subSlug }) {
 
     const loading = categoriesState.loading || articlesState.loading
     const error = categoriesState.error || articlesState.error
+
+    useDocumentTitle(categoriesState.data?.find((c) => c.slug === slug)?.name)
 
     const retry = () => {
         categoriesState.refetch()

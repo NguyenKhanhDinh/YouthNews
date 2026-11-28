@@ -6,6 +6,7 @@ import { slugify } from '../../data/seed'
 import ArticleCard from '../../components/article/ArticleCard'
 import AdSlot from '../../components/ads/AdSlot'
 import { isArticleSaved, toggleSavedArticle } from '../../utils/bookmarks'
+import useDocumentTitle from '../../hooks/useDocumentTitle'
 import './ArticleDetailPage.css'
 
 export default function ArticleDetailPage() {
@@ -42,6 +43,8 @@ function ArticleDetailContent({ slug }) {
 
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
+
+    useDocumentTitle(article?.title)
 
     if (articleState.loading) {
         return (

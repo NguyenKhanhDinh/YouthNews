@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { api, useApi } from '../api'
 import ArticleCard from '../components/article/ArticleCard'
 import { getSavedArticleSlugs } from '../utils/bookmarks'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import './educationPage/EducationPage.css'
 import './SavedArticlesPage.css'
 
@@ -15,6 +16,8 @@ export default function SavedArticlesPage() {
         }
     })
     const articlesState = useApi(api.getArticles, { page: 1, limit: 100 })
+
+    useDocumentTitle('Tin đã lưu')
 
     const loading = articlesState.loading
     const error = bookmarkError || articlesState.error
