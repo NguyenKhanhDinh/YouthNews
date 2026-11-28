@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { categories } from '../../data/categories'
-import { allArticles } from '../../data/seed'
+import { allArticles, slugify } from '../../data/seed'
 import { videos } from '../../data/videos'
 import { podcasts } from '../../data/podcasts'
 import { magazines } from '../../data/magazines'
@@ -32,7 +32,7 @@ function buildMegaData() {
         data[c.slug] = {
             subs: [...new Set(list.map((a) => a.category))].map((sub) => ({
                 label: sub,
-                to: `/chuyen-muc/${c.slug}?muc=${encodeURIComponent(sub)}`,
+                to: `/chuyen-muc/${c.slug}/${slugify(sub)}`,
             })),
             latest: list.slice(0, MEGA_ARTICLES).map((a) => ({
                 to: `/bai-viet/${a.slug}`,

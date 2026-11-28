@@ -26,6 +26,7 @@ function App() {
             <main className="app__main">
                 <Routes>
                     <Route path = "/" element={<HomePage />} />
+                    <Route path="/chuyen-muc/:slug/:sub" element={<CategoryPage />} />
                     <Route path="/chuyen-muc/:slug" element={<CategoryPage />} />
                     <Route path="/video" element={<VideoPage />} />
                     <Route path="/video/:slug" element={<VideoDetailPage />} />

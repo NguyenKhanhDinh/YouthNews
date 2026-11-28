@@ -1,4 +1,4 @@
-import { allArticles } from '../data/seed'
+import { allArticles, slugify } from '../data/seed'
 import { categories } from '../data/categories'
 import { ApiError, request } from './client'
 
@@ -44,7 +44,17 @@ export function getCategories() {
     return request(() =>
         categories.map((c) => ({
             ...c,
-            subCategories: [...new Set(allArticles.filter((a) => a.categorySlug === c.slug).map((a) => a.category))],
+            subCategories: [
+                ...new Set(
+                    allArticles
+                        .filter((a) => a.categorySlug === c.slug)
+                        .map((a) => a.category),
+                ),
+            ].map((name) => ({
+                name,
+                slug: slugify(name),
+                count: allArticles.filter((a) => a.categorySlug === c.slug && a.category === name).length,
+            })),
         })),
     )
 }
@@ -53,7 +63,7 @@ export function getArticles({ category, sub, sort = 'latest', page = 1, limit = 
     return request(() => {
         let list = allArticles
         if (category) list = list.filter((a) => a.categorySlug === category)
-        if (sub) list = list.filter((a) => a.category === sub)
+        if (sub) list = list.filter((a) => slugify(a.category) === sub || a.category === sub)
         if (exclude.length) list = list.filter((a) => !exclude.includes(a.slug))
         list = sort === 'views' ? byViewsDesc(list) : byDateDesc(list)
         return paginate(list, page, limit)

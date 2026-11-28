@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import CategoryNewsPage from '../../components/categoryNews/CategoryNewsPage'
 import NotFoundPage from '../notFoundPage/NotFoundPage'
@@ -6,9 +7,23 @@ import '../educationPage/EducationPage.css'
 import '../HomePage/HomePage.css'
 
 export default function CategoryPage() {
-    const { slug } = useParams()
+    const { slug, sub } = useParams()
+    return <CategoryPageContent key={`${slug}:${sub ?? ''}`} slug={slug} subSlug={sub} />
+}
+
+function CategoryPageContent({ slug, subSlug }) {
     const categoriesState = useApi(api.getCategories)
-    const articlesState = useApi(api.getArticles, { category: slug, limit: 100 })
+    const articlesState = useApi(api.getArticles, {
+        category: slug,
+        sub: subSlug,
+        page: 1,
+        limit: 4,
+    })
+    const [page, setPage] = useState(1)
+    const [additionalArticles, setAdditionalArticles] = useState([])
+    const [hasMore, setHasMore] = useState(false)
+    const [loadingMore, setLoadingMore] = useState(false)
+    const [loadMoreError, setLoadMoreError] = useState(null)
 
     const loading = categoriesState.loading || articlesState.loading
     const error = categoriesState.error || articlesState.error
@@ -44,25 +59,52 @@ export default function CategoryPage() {
     const category = categoriesState.data.find((c) => c.slug === slug)
     if (!category) return <NotFoundPage />
 
-    const articles = articlesState.data.items
-    if (articles.length === 0) {
-        return (
-            <div className="education-page">
-                <div className="education-page__container">
-                    <p role="status">Chưa có bài viết nào thuộc chuyên mục {category.name}.</p>
-                </div>
-            </div>
-        )
+    const subCategory = subSlug
+        ? category.subCategories.find((item) => item.slug === subSlug)
+        : null
+    if (subSlug && !subCategory) return <NotFoundPage />
+
+    const loadMore = async () => {
+        const canLoadMore = page === 1 ? articlesState.data?.hasMore : hasMore
+        if (!canLoadMore || loadingMore) return
+
+        setLoadingMore(true)
+        setLoadMoreError(null)
+        try {
+            const nextPage = page + 1
+            const result = await api.getArticles({
+                category: slug,
+                sub: subSlug,
+                page: nextPage,
+                limit: 4,
+            })
+            setAdditionalArticles((current) => [...current, ...result.items])
+            setPage(nextPage)
+            setHasMore(result.hasMore)
+        } catch (loadError) {
+            setLoadMoreError(loadError)
+        } finally {
+            setLoadingMore(false)
+        }
     }
+
+    const articles = [...articlesState.data.items, ...additionalArticles]
+    const topics = category.subCategories
+    const canLoadMore = page === 1 ? articlesState.data.hasMore : hasMore
 
     return (
         <CategoryNewsPage
-            key={slug}
+            categorySlug={slug}
             name={category.name}
             eyebrow={category.eyebrow ?? 'YouthNews · Chuyên mục'}
             intro={category.intro ?? `Tin tức ${category.name.toLowerCase()} mới nhất, được cập nhật liên tục.`}
-            topics={category.subCategories}
+            topics={topics}
             articles={articles}
+            selectedSubCategory={subCategory}
+            onLoadMore={loadMore}
+            hasMore={canLoadMore}
+            loadingMore={loadingMore}
+            loadMoreError={loadMoreError}
         />
     )
 }
