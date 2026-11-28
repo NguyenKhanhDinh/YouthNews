@@ -19,6 +19,7 @@ function ArticleDetailContent({ slug }) {
     const article = articleState.data
     const relatedArticles = relatedState.data ?? []
     const [progress, setProgress] = useState(0)
+    const [shareMessage, setShareMessage] = useState('')
     const [bookmarkState, setBookmarkState] = useState(() => {
         try {
             return { isSaved: isArticleSaved(slug), error: null }
@@ -82,6 +83,19 @@ function ArticleDetailContent({ slug }) {
             setBookmarkState((current) => ({ ...current, error }))
         }
     }
+
+    const handleCopyLink = async () => {
+        try {
+            await navigator.clipboard.writeText(window.location.href)
+            setShareMessage('Đã sao chép liên kết bài viết.')
+        } catch {
+            setShareMessage('Không thể sao chép tự động. Hãy sao chép đường dẫn trên thanh địa chỉ.')
+        }
+    }
+
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        window.location.href,
+    )}`
 
     return (
         <article className="article-detail">
@@ -154,6 +168,21 @@ function ArticleDetailContent({ slug }) {
                                     </Link>
                                 ))}
                             </nav>
+                        )}
+                    </div>
+
+                    <div className="article-detail__share" role="group" aria-label="Chia sẻ bài viết">
+                        <span className="article-detail__share-label">Chia sẻ bài viết</span>
+                        <button type="button" onClick={handleCopyLink}>
+                            Sao chép liên kết
+                        </button>
+                        <a href={facebookShareUrl} target="_blank" rel="noreferrer">
+                            Chia sẻ Facebook
+                        </a>
+                        {shareMessage && (
+                            <span className="article-detail__share-message" role="status">
+                                {shareMessage}
+                            </span>
                         )}
                     </div>
 
