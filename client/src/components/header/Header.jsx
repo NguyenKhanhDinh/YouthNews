@@ -10,7 +10,6 @@ import { magazines } from '../../data/magazines'
 import Logo from '../Logo'
 import './Header.css'
 
-const NAV_VISIBLE = 8
 const MEGA_ARTICLES = 3
 
 const trending = [
@@ -18,6 +17,8 @@ const trending = [
     'Sinh viên khởi nghiệp công nghệ gây quỹ thành công',
     'Giải bóng đá sinh viên toàn quốc khởi tranh',
 ]
+// Mọi mục menu (chuyên mục + Video/Podcast/Magazine) đều có khung hiện khi rê chuột,
+// cả ở thanh menu ngoài lẫn trong bảng Menu khi bấm mở.
 const EXTRA_ENTRIES = [
     { slug: 'video', name: 'Video', to: '/video' },
     { slug: 'podcast', name: 'Podcast', to: '/podcast' },
@@ -27,6 +28,10 @@ const NAV_ENTRIES = [
     ...categories.map((c) => ({ slug: c.slug, name: c.name, to: `/chuyen-muc/${c.slug}` })),
     ...EXTRA_ENTRIES,
 ]
+
+// Số mục hiện trên thanh menu. Nếu nhỏ hơn NAV_ENTRIES.length, phần còn lại nằm trong nút "Menu"
+// (nút chỉ hiện khi có mục bị ẩn); trên điện thoại, nút gạch ba dòng luôn mở bảng Menu đầy đủ.
+const NAV_VISIBLE = NAV_ENTRIES.length
 
 const newest = (list) => [...list].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
 
@@ -136,6 +141,15 @@ export default function Header() {
         return () => window.removeEventListener('keydown', onKey)
     }, [])
 
+    useEffect(() => {
+        const mq = window.matchMedia('(min-width: 641px)')
+        const onChange = (e) => {
+            if (e.matches) setMenuOpen(false)
+        }
+        mq.addEventListener('change', onChange)
+        return () => mq.removeEventListener('change', onChange)
+    }, [])
+
     const closeMenu = () => {
         setMenuOpen(false)
         setHoverSlug(null)
@@ -199,7 +213,7 @@ export default function Header() {
                     <ul className="header__quick">
                         <li><Link to="/">Mới nhất</Link></li>
                         <li><a href="#">Đọc nhiều</a></li>
-                        <li><a href="#">Video</a></li>
+                        <li><Link to="/video">Video</Link></li>
                         <li><a href="#">Liên hệ</a></li>
                     </ul>
                 </div>
@@ -259,28 +273,30 @@ export default function Header() {
                                 </svg>
                             </NavLink>
                         </li>
-                        {categories.slice(0, NAV_VISIBLE).map((c) => (
+                        {NAV_ENTRIES.slice(0, NAV_VISIBLE).map((e) => (
                             <li
-                                key={c.slug}
-                                className={hoverSlug === c.slug ? 'is-hover' : ''}
-                                onMouseEnter={() => setHoverSlug(c.slug)}
-                                onFocus={() => setHoverSlug(c.slug)}
+                                key={e.slug}
+                                className={hoverSlug === e.slug ? 'is-hover' : ''}
+                                onMouseEnter={() => setHoverSlug(e.slug)}
+                                onFocus={() => setHoverSlug(e.slug)}
                             >
-                                <NavLink to={`/chuyen-muc/${c.slug}`} className={activeClass} onClick={closeMenu}>
-                                    {c.name}
+                                <NavLink to={e.to} className={activeClass} onClick={closeMenu}>
+                                    {e.name}
                                 </NavLink>
                             </li>
                         ))}
-                        <li className="header__nav-extra">
-                            <button
-                                className="header__menu-btn"
-                                onClick={() => setMenuOpen((v) => !v)}
-                                aria-expanded={menuOpen}
-                                aria-controls="mega-menu"
-                            >
-                                {menuOpen ? 'Đóng' : 'Menu'}
-                            </button>
-                        </li>
+                        {NAV_ENTRIES.length > NAV_VISIBLE && (
+                            <li className="header__nav-extra">
+                                <button
+                                    className="header__menu-btn"
+                                    onClick={() => setMenuOpen((v) => !v)}
+                                    aria-expanded={menuOpen}
+                                    aria-controls="mega-menu"
+                                >
+                                    {menuOpen ? 'Đóng' : 'Menu'}
+                                </button>
+                            </li>
+                        )}
                     </ul>
                 </nav>
                 {!menuOpen && renderHover()}
@@ -305,6 +321,7 @@ export default function Header() {
                 )}
             </div>
 
+            {/* Dòng tin nóng */}
             <div className="header__ticker">
                 <div className="header__container header__ticker-inner">
                     <span className="header__ticker-label">Tin nóng</span>
