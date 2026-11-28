@@ -11,14 +11,6 @@ import Logo from '../Logo'
 import './Header.css'
 
 const MEGA_ARTICLES = 3
-
-const trending = [
-    'Tuyển sinh đại học 2027: những điều thí sinh cần biết',
-    'Sinh viên khởi nghiệp công nghệ gây quỹ thành công',
-    'Giải bóng đá sinh viên toàn quốc khởi tranh',
-]
-// Mọi mục menu (chuyên mục + Video/Podcast/Magazine) đều có khung hiện khi rê chuột,
-// cả ở thanh menu ngoài lẫn trong bảng Menu khi bấm mở.
 const EXTRA_ENTRIES = [
     { slug: 'video', name: 'Video', to: '/video' },
     { slug: 'podcast', name: 'Podcast', to: '/podcast' },
@@ -28,9 +20,6 @@ const NAV_ENTRIES = [
     ...categories.map((c) => ({ slug: c.slug, name: c.name, to: `/chuyen-muc/${c.slug}` })),
     ...EXTRA_ENTRIES,
 ]
-
-// Số mục hiện trên thanh menu. Nếu nhỏ hơn NAV_ENTRIES.length, phần còn lại nằm trong nút "Menu"
-// (nút chỉ hiện khi có mục bị ẩn); trên điện thoại, nút gạch ba dòng luôn mở bảng Menu đầy đủ.
 const NAV_VISIBLE = NAV_ENTRIES.length
 
 const newest = (list) => [...list].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
@@ -120,6 +109,10 @@ export default function Header() {
     const [keyword, setKeyword] = useState('')
     const [hoverSlug, setHoverSlug] = useState(null)
     const megaData = useMemo(() => buildMegaData(), [])
+    const trending = useMemo(
+        () => [...allArticles].sort((a, b) => b.views - a.views).slice(0, 3),
+        [],
+    )
     const hoverEntry = NAV_ENTRIES.find((e) => e.slug === hoverSlug)
     const hoverData = hoverSlug ? megaData[hoverSlug] : null
 
@@ -212,9 +205,9 @@ export default function Header() {
                     <span className="header__date">{today}</span>
                     <ul className="header__quick">
                         <li><Link to="/">Mới nhất</Link></li>
-                        <li><a href="#">Đọc nhiều</a></li>
+                        <li><Link to="/#doc-nhieu">Đọc nhiều</Link></li>
                         <li><Link to="/video">Video</Link></li>
-                        <li><a href="#">Liên hệ</a></li>
+                        <li><Link to="/lien-he">Liên hệ</Link></li>
                     </ul>
                 </div>
             </div>
@@ -321,13 +314,13 @@ export default function Header() {
                 )}
             </div>
 
-            {/* Dòng tin nóng */}
+
             <div className="header__ticker">
                 <div className="header__container header__ticker-inner">
                     <span className="header__ticker-label">Tin nóng</span>
                     <div className="header__ticker-list">
-                        {trending.map((t) => (
-                            <a href="#" key={t}>{t}</a>
+                        {trending.map((a) => (
+                            <Link key={a.slug} to={`/bai-viet/${a.slug}`}>{a.title}</Link>
                         ))}
                     </div>
                 </div>

@@ -125,19 +125,21 @@ export default function CategoryNewsPage({ name, eyebrow, intro, topics, article
                         )}
                     </section>
 
-                    <aside className="category-news__popular" aria-labelledby="popular-title">
-                        <div className="category-news__section-heading">
-                            <h2 id="popular-title">Đọc nhiều</h2>
-                        </div>
-                        <ol>
-                            {popularStories.map((article) => (
-                                <li key={article.slug}>
-                                    <Link to={`/bai-viet/${article.slug}`}>{article.title}</Link>
-                                </li>
-                            ))}
-                        </ol>
-                    </aside>
-                    <AdSlot slot="rectangle" index={1} />
+                    <div className="ad-side">
+                        <aside className="category-news__popular" aria-labelledby="popular-title">
+                            <div className="category-news__section-heading">
+                                <h2 id="popular-title">Đọc nhiều</h2>
+                            </div>
+                            <ol>
+                                {popularStories.map((article) => (
+                                    <li key={article.slug}>
+                                        <Link to={`/bai-viet/${article.slug}`}>{article.title}</Link>
+                                    </li>
+                                ))}
+                            </ol>
+                        </aside>
+                        <AdSlot slot="rectangle" index={1} />
+                    </div>
                 </div>
             </div>
         </div>
