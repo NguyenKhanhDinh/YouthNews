@@ -70,6 +70,13 @@ export function getArticleBySlug(slug) {
     })
 }
 
+export function getArticlesBySlugs(slugs = []) {
+    return request(() => {
+        const bySlug = new Map(allArticles.map((a) => [a.slug, a]))
+        return slugs.map((slug) => bySlug.get(slug)).filter(Boolean)
+    })
+}
+
 export function getRelatedArticles(slug, limit = 3) {
     return request(() => {
         const current = allArticles.find((a) => a.slug === slug)
