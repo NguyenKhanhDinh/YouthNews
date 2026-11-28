@@ -5,15 +5,28 @@ import { categories } from '../../data/categories'
 import { slugify } from '../../data/seed'
 import ArticleCard from '../../components/article/ArticleCard'
 import AdSlot from '../../components/ads/AdSlot'
+import { isArticleSaved, toggleSavedArticle } from '../../utils/bookmarks'
 import './ArticleDetailPage.css'
 
 export default function ArticleDetailPage() {
     const { slug } = useParams()
+    return <ArticleDetailContent key={slug} slug={slug} />
+}
+
+function ArticleDetailContent({ slug }) {
     const articleState = useApi(api.getArticleBySlug, slug)
     const relatedState = useApi(api.getRelatedArticles, slug)
     const article = articleState.data
     const relatedArticles = relatedState.data ?? []
     const [progress, setProgress] = useState(0)
+    const [bookmarkState, setBookmarkState] = useState(() => {
+        try {
+            return { isSaved: isArticleSaved(slug), error: null }
+        } catch (error) {
+            return { isSaved: false, error }
+        }
+    })
+    const { isSaved, error: bookmarkError } = bookmarkState
 
     useEffect(() => {
         const handleScroll = () => {
@@ -62,6 +75,14 @@ export default function ArticleDetailPage() {
     const categoryPath = `/chuyen-muc/${article.categorySlug}`
     const tags = [...new Set(article.tags ?? [])]
 
+    const handleToggleSaved = () => {
+        try {
+            setBookmarkState({ isSaved: toggleSavedArticle(article.slug), error: null })
+        } catch (error) {
+            setBookmarkState((current) => ({ ...current, error }))
+        }
+    }
+
     return (
         <article className="article-detail">
             <div
@@ -87,6 +108,22 @@ export default function ArticleDetailPage() {
                         <time>{article.date}</time>
                         <span>{article.readTime}</span>
                     </div>
+                    <button
+                        className={`article-detail__save${isSaved ? ' is-saved' : ''}`}
+                        type="button"
+                        onClick={handleToggleSaved}
+                        aria-pressed={isSaved}
+                    >
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill={isSaved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-4-6 4z" />
+                        </svg>
+                        {isSaved ? 'Đã lưu' : 'Lưu tin'}
+                    </button>
+                    {bookmarkError && (
+                        <p className="article-detail__bookmark-error" role="alert">
+                            {bookmarkError.message}
+                        </p>
+                    )}
                 </header>
 
                 <figure className="article-detail__cover">

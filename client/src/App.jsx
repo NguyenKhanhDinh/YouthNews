@@ -7,6 +7,7 @@ import Register from './pages/register/Register'
 import SearchPage from './pages/SearchPage'
 import HomePage from './pages/HomePage/HomePage.jsx'
 import ArticleDetailPage from './pages/articleDetailPage/ArticleDetailPage'
+import SavedArticlesPage from './pages/SavedArticlesPage'
 import ForgotPassword from './pages/ForgotPassword'
 import NotFoundPage from './pages/notFoundPage/NotFoundPage'
 import VideoPage from './pages/videoPage/VideoPage'
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/magazine/:slug" element={<MagazineDetailPage />} />
                     <Route path="/tim-kiem" element={<SearchPage />} />
                     <Route path="/bai-viet/:slug" element={<ArticleDetailPage />} />
+                    <Route path="/tin-da-luu" element={<SavedArticlesPage />} />
                     <Route element={<AuthLayout />}>
                         <Route path="/dang-nhap" element={<Login />} />
                         <Route path="/dang-ky" element={<Register />} />
