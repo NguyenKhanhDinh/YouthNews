@@ -1,5 +1,5 @@
-import {Fragment, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Fragment, useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import ArticleCard from '../../components/article/ArticleCard'
 import AdSlot from '../../components/ads/AdSlot'
 import { api, useApi } from '../../api'
@@ -136,7 +136,7 @@ function LatestList({ initial, excludeSlugs }) {
 
 function MostRead({ items }) {
     return (
-        <aside className="education-popular" aria-labelledby="home-popular-title">
+        <aside id="doc-nhieu" className="education-popular" aria-labelledby="home-popular-title">
             <div className="education-section-heading">
                 <h2 id="home-popular-title">Đọc nhiều</h2>
             </div>
@@ -185,6 +185,11 @@ function CategorySection({ category, articles }) {
 
 export default function HomePage() {
     const { data, loading, error, refetch } = useApi(api.getHome)
+    const { hash } = useLocation()
+    useEffect(() => {
+        if (!data || hash !== '#doc-nhieu') return
+        document.getElementById('doc-nhieu')?.scrollIntoView({ block: 'start' })
+    }, [data, hash])
 
     return (
         <div className="education-page home-page">
@@ -195,9 +200,13 @@ export default function HomePage() {
                     <>
                         <Hero hero={data.hero} />
                         <Focus items={data.focus} />
+                        <AdSlot slot="leaderboard" index={0} />
                         <div className="education-content-grid">
                             <LatestList initial={data.latest} excludeSlugs={data.usedSlugs} />
-                            <MostRead items={data.mostRead} />
+                            <div className="ad-side">
+                                <MostRead items={data.mostRead} />
+                                <AdSlot slot="rectangle" index={0} />
+                            </div>
                         </div>
                         {data.sections.map((s,i) => (
                             <Fragment key={s.category.slug}>

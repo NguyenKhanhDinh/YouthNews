@@ -59,8 +59,8 @@ export default function CategoryPage() {
         <CategoryNewsPage
             key={slug}
             name={category.name}
-            eyebrow="YouthNews · Chuyên mục"
-            intro={`Tin tức ${category.name.toLowerCase()} mới nhất, được cập nhật liên tục.`}
+            eyebrow={category.eyebrow ?? 'YouthNews · Chuyên mục'}
+            intro={category.intro ?? `Tin tức ${category.name.toLowerCase()} mới nhất, được cập nhật liên tục.`}
             topics={category.subCategories}
             articles={articles}
         />
