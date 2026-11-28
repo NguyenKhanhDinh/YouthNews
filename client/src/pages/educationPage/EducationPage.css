@@ -500,3 +500,52 @@
     opacity: 0.85;
 }
 }
+
+.search-page__history {
+    margin-top: 20px;
+}
+
+.search-page__history .search-page__history-title {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--yn-text);
+}
+
+.search-page__history-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.search-page__chip {
+    padding: 6px 14px;
+    border: 1px solid var(--yn-border);
+    border-radius: 999px;
+    color: var(--yn-text);
+    font-size: 14px;
+    text-decoration: none;
+    background: var(--yn-surface);
+}
+
+.search-page__chip:hover {
+    border-color: var(--yn-primary);
+    color: var(--yn-primary);
+}
+
+.search-page__history-clear {
+    margin-top: 12px;
+    padding: 0;
+    border: 0;
+    color: var(--yn-primary);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    background: transparent;
+    cursor: pointer;
+}
+
+.search-page__history-clear:hover {
+    text-decoration: underline;
+}

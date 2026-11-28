@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import ArticleCard from '../components/article/ArticleCard'
 import { api, useApi } from '../api'
 import useDocumentTitle from '../hooks/useDocumentTitle'
+import { addSearchHistory, clearSearchHistory, getSearchHistory } from '../utils/searchHistory'
 import './educationPage/EducationPage.css'
 
 export default function SearchPage() {
@@ -15,6 +16,21 @@ export default function SearchPage() {
     const results = data?.items ?? []
 
     useDocumentTitle(query ? `Tìm kiếm: ${query}` : 'Tìm kiếm')
+
+    const [historyVersion, setHistoryVersion] = useState(0)
+    const history = useMemo(
+        () => (query ? [] : getSearchHistory()),
+        [query, historyVersion],
+    )
+
+    useEffect(() => {
+        if (query) addSearchHistory(query)
+    }, [query])
+
+    const handleClearHistory = () => {
+        clearSearchHistory()
+        setHistoryVersion((version) => version + 1)
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -62,6 +78,29 @@ export default function SearchPage() {
                         <p className="search-page__hint">
                             Gợi ý: tuyển sinh, đại học, học bổng, kỳ thi...
                         </p>
+                        {history.length > 0 && (
+                            <div className="search-page__history">
+                                <p className="search-page__history-title">Tìm kiếm gần đây</p>
+                                <div className="search-page__history-list">
+                                    {history.map((item) => (
+                                        <Link
+                                            className="search-page__chip"
+                                            key={item}
+                                            to={`/tim-kiem?q=${encodeURIComponent(item)}`}
+                                        >
+                                            {item}
+                                        </Link>
+                                    ))}
+                                </div>
+                                <button
+                                    className="search-page__history-clear"
+                                    type="button"
+                                    onClick={handleClearHistory}
+                                >
+                                    Xóa lịch sử
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ) : loading ? (
                     <div className="search-page__empty" role="status" aria-busy="true">
