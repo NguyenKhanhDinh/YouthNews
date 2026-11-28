@@ -1,14 +1,11 @@
 import { podcasts } from '../data/podcasts'
-import { categories } from '../data/categories.js'
 import { ApiError, request } from './client'
-
-const byDateDesc = (list) =>
-    [...list].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+import { byDateDesc, formatDate, getCategoryName } from './helpers'
 
 const withMeta = (p) => ({
     ...p,
-    categoryName: categories.find((c) => c.slug === p.categorySlug)?.name ?? '',
-    date: new Date(p.publishedAt).toLocaleDateString('vi-VN'),
+    categoryName: getCategoryName(p.categorySlug),
+    date: formatDate(p.publishedAt),
 })
 
 export function getPodcasts({ show } = {}) {

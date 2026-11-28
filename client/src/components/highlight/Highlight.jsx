@@ -1,9 +1,4 @@
-const normalizeText = (text = '') =>
-    text
-        .toLocaleLowerCase('vi')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/đ/g, 'd')
+import { normalizeText } from '../../utils/text'
 
 function findRanges(text, keyword) {
     const needle = normalizeText(keyword.trim())

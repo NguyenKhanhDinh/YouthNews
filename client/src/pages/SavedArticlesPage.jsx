@@ -7,6 +7,11 @@ import useDocumentTitle from '../hooks/useDocumentTitle'
 import './educationPage/EducationPage.css'
 import './SavedArticlesPage.css'
 
+function sortNewestSavedFirst(articles, savedSlugs) {
+    const bySlug = new Map(articles.map((article) => [article.slug, article]))
+    return [...savedSlugs].reverse().map((slug) => bySlug.get(slug)).filter(Boolean)
+}
+
 export default function SavedArticlesPage() {
     const [{ savedSlugs, bookmarkError }, setBookmarkState] = useState(() => {
         try {
@@ -16,14 +21,15 @@ export default function SavedArticlesPage() {
         }
     })
     const [actionError, setActionError] = useState(null)
-    const articlesState = useApi(api.getArticles, { page: 1, limit: 100 })
+    const [initialSlugs] = useState(savedSlugs)
+    const articlesState = useApi(api.getArticlesBySlugs, initialSlugs)
 
     useDocumentTitle('Tin đã lưu')
 
     const loading = articlesState.loading
     const error = bookmarkError || articlesState.error
     const savedArticles = !loading && !error
-        ? articlesState.data.items.filter((article) => savedSlugs.includes(article.slug))
+        ? sortNewestSavedFirst(articlesState.data, savedSlugs)
         : []
 
     const handleRemove = (slug) => {

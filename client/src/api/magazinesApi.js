@@ -1,17 +1,14 @@
 import { magazines } from '../data/magazines'
-import { categories } from '../data/categories.js'
 import { ApiError, request } from './client'
-
-const byDateDesc = (list) =>
-    [...list].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+import { byDateDesc, formatDate, getCategoryName } from './helpers'
 
 const wordCount = (m) =>
     m.sections.reduce((n, s) => n + s.paragraphs.join(' ').split(/\s+/).length, 0)
 
 const withMeta = (m) => ({
     ...m,
-    categoryName: categories.find((c) => c.slug === m.categorySlug)?.name ?? '',
-    date: new Date(m.publishedAt).toLocaleDateString('vi-VN'),
+    categoryName: getCategoryName(m.categorySlug),
+    date: formatDate(m.publishedAt),
     readTime: Math.max(1, Math.ceil(wordCount(m) / 200)),
 })
 

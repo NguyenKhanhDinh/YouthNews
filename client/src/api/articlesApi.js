@@ -1,18 +1,10 @@
 import { allArticles, slugify } from '../data/seed'
 import { categories } from '../data/categories'
+import { normalizeText } from '../utils/text'
 import { ApiError, request } from './client'
-
-const byDateDesc = (list) =>
-    [...list].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+import { byDateDesc } from './helpers'
 
 const byViewsDesc = (list) => [...list].sort((a, b) => b.views - a.views)
-
-const normalize = (text = '') =>
-    text
-        .toLocaleLowerCase('vi')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/đ/g, 'd')
 
 function pickDistinctCategories(list, count, excludeSlugs = [], excludeCategories = []) {
     const seen = new Set(excludeCategories)
@@ -78,6 +70,13 @@ export function getArticleBySlug(slug) {
     })
 }
 
+export function getArticlesBySlugs(slugs = []) {
+    return request(() => {
+        const bySlug = new Map(allArticles.map((a) => [a.slug, a]))
+        return slugs.map((slug) => bySlug.get(slug)).filter(Boolean)
+    })
+}
+
 export function getRelatedArticles(slug, limit = 3) {
     return request(() => {
         const current = allArticles.find((a) => a.slug === slug)
@@ -94,10 +93,10 @@ export function getMostRead(limit = 5) {
 
 export function searchArticles({ q = '', sort = 'latest', page = 1, limit = 10 } = {}) {
     return request(() => {
-        const keyword = normalize(q.trim())
+        const keyword = normalizeText(q.trim())
         if (!keyword) return paginate([], page, limit)
         const matched = allArticles.filter((a) =>
-            [a.title, a.summary, a.category, ...a.tags].some((v) => normalize(v).includes(keyword)),
+            [a.title, a.summary, a.category, ...a.tags].some((v) => normalizeText(v).includes(keyword)),
         )
         return paginate(sort === 'views' ? byViewsDesc(matched) : byDateDesc(matched), page, limit)
     })

@@ -1,15 +1,13 @@
 import { videos } from '../data/videos'
 import { categories } from '../data/categories.js'
 import { ApiError, request } from './client'
-
-const byDateDesc = (list) =>
-    [...list].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+import { byDateDesc, formatDate, getCategoryName } from './helpers'
 
 const withMeta = (v) => ({
     ...v,
     thumbnail: `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`,
-    categoryName: categories.find((c) => c.slug === v.categorySlug)?.name ?? '',
-    date: new Date(v.publishedAt).toLocaleDateString('vi-VN'),
+    categoryName: getCategoryName(v.categorySlug),
+    date: formatDate(v.publishedAt),
 })
 
 export function getVideos({ category } = {}) {
