@@ -1,19 +1,97 @@
-import { useEffect, useState } from 'react'
+import { useEffect , useMemo, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { categories } from '../../data/categories'
+import { allArticles } from '../../data/seed'
+import { videos } from '../../data/videos'
+import { podcasts } from '../../data/podcasts'
+import { magazines } from '../../data/magazines'
 import Logo from '../Logo'
 import './Header.css'
 
-const NAV_VISIBLE = 4
+const MEGA_ARTICLES = 3
 
 const trending = [
     'Tuyển sinh đại học 2027: những điều thí sinh cần biết',
     'Sinh viên khởi nghiệp công nghệ gây quỹ thành công',
     'Giải bóng đá sinh viên toàn quốc khởi tranh',
 ]
+// Mọi mục menu (chuyên mục + Video/Podcast/Magazine) đều có khung hiện khi rê chuột,
+// cả ở thanh menu ngoài lẫn trong bảng Menu khi bấm mở.
+const EXTRA_ENTRIES = [
+    { slug: 'video', name: 'Video', to: '/video' },
+    { slug: 'podcast', name: 'Podcast', to: '/podcast' },
+    { slug: 'magazine', name: 'Magazine', to: '/magazine' },
+]
+const NAV_ENTRIES = [
+    ...categories.map((c) => ({ slug: c.slug, name: c.name, to: `/chuyen-muc/${c.slug}` })),
+    ...EXTRA_ENTRIES,
+]
 
+// Số mục hiện trên thanh menu. Nếu nhỏ hơn NAV_ENTRIES.length, phần còn lại nằm trong nút "Menu"
+// (nút chỉ hiện khi có mục bị ẩn); trên điện thoại, nút gạch ba dòng luôn mở bảng Menu đầy đủ.
+const NAV_VISIBLE = NAV_ENTRIES.length
+
+const newest = (list) => [...list].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+
+function buildMegaData() {
+    const byDate = newest(allArticles)
+    const data = {}
+    for (const c of categories) {
+        const list = byDate.filter((a) => a.categorySlug === c.slug)
+        data[c.slug] = {
+            subs: [...new Set(list.map((a) => a.category))].map((sub) => ({
+                label: sub,
+                to: `/chuyen-muc/${c.slug}?muc=${encodeURIComponent(sub)}`,
+            })),
+            latest: list.slice(0, MEGA_ARTICLES).map((a) => ({
+                to: `/bai-viet/${a.slug}`,
+                title: a.title,
+                image: a.image,
+                alt: a.imageAlt,
+            })),
+        }
+    }
+
+    const videoCats = [...new Set(videos.map((v) => v.categorySlug))]
+    data.video = {
+        subs: videoCats.map((slug) => ({
+            label: categories.find((c) => c.slug === slug)?.name ?? slug,
+            to: `/video?chuyen-muc=${slug}`,
+        })),
+        latest: newest(videos).slice(0, MEGA_ARTICLES).map((v) => ({
+            to: `/video/${v.slug}`,
+            title: v.title,
+            image: `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`,
+            alt: v.title,
+        })),
+    }
+
+    data.podcast = {
+        subs: [...new Set(podcasts.map((p) => p.show))].map((show) => ({
+            label: show,
+            to: `/podcast?chuong-trinh=${encodeURIComponent(show)}`,
+        })),
+        latest: newest(podcasts).slice(0, MEGA_ARTICLES).map((p) => ({
+            to: `/podcast/${p.slug}`,
+            title: p.title,
+            theme: p.theme,
+            label: `${p.show} · Tập ${p.episode}`,
+        })),
+    }
+
+    data.magazine = {
+        subs: [],
+        latest: newest(magazines).slice(0, MEGA_ARTICLES).map((m) => ({
+            to: `/magazine/${m.slug}`,
+            title: m.title,
+            image: m.cover,
+            alt: m.title,
+        })),
+    }
+    return data
+}
 function useTheme() {
     const [theme, setTheme] = useState(() => {
         try {
@@ -22,7 +100,6 @@ function useTheme() {
             return 'light'
         }
     })
-
     useEffect(() => {
         document.documentElement.dataset.theme = theme
         try {
@@ -41,6 +118,10 @@ export default function Header() {
     const { theme, toggleTheme } = useTheme()
     const [menuOpen, setMenuOpen] = useState(false)
     const [keyword, setKeyword] = useState('')
+    const [hoverSlug, setHoverSlug] = useState(null)
+    const megaData = useMemo(() => buildMegaData(), [])
+    const hoverEntry = NAV_ENTRIES.find((e) => e.slug === hoverSlug)
+    const hoverData = hoverSlug ? megaData[hoverSlug] : null
 
     const today = new Date().toLocaleDateString('vi-VN', {
         weekday: 'long',
@@ -50,12 +131,29 @@ export default function Header() {
     })
 
     useEffect(() => {
-        const onKey = (e) => e.key === 'Escape' && setMenuOpen(false)
+        const onKey = (e) => {
+            if (e.key === 'Escape') {
+                setMenuOpen(false)
+                setHoverSlug(null)
+            }
+        }
         window.addEventListener('keydown', onKey)
         return () => window.removeEventListener('keydown', onKey)
     }, [])
 
-    const closeMenu = () => setMenuOpen(false)
+    useEffect(() => {
+        const mq = window.matchMedia('(min-width: 641px)')
+        const onChange = (e) => {
+            if (e.matches) setMenuOpen(false)
+        }
+        mq.addEventListener('change', onChange)
+        return () => mq.removeEventListener('change', onChange)
+    }, [])
+
+    const closeMenu = () => {
+        setMenuOpen(false)
+        setHoverSlug(null)
+    }
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -67,6 +165,46 @@ export default function Header() {
 
     const activeClass = ({ isActive }) => (isActive ? 'is-active' : '')
 
+    const renderHover = (inline = false) =>
+        hoverEntry && hoverData && (
+            <div
+                className={`header__hover${inline ? ' header__hover--inline' : ''}`}
+                role="region"
+                aria-label={`Nội dung ${hoverEntry.name}`}
+            >
+                <div className="header__container header__hover-inner">
+                    <div className="header__hover-left">
+                        <Link to={hoverEntry.to} className="header__hover-title" onClick={closeMenu}>
+                            {hoverEntry.name}
+                        </Link>
+                        {hoverData.subs.length > 0 && (
+                            <ul className="header__hover-subs">
+                                {hoverData.subs.map((sub) => (
+                                    <li key={sub.to}>
+                                        <Link to={sub.to} onClick={closeMenu}>
+                                            {sub.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                    <div className="header__hover-articles">
+                        {hoverData.latest.map((a) => (
+                            <Link key={a.to} to={a.to} className="header__hover-card" onClick={closeMenu}>
+                                {a.image ? (
+                                    <img src={a.image} alt={a.alt} loading="lazy" />
+                                ) : (
+                                    <div className={`header__hover-cover header__hover-cover--${a.theme}`}>{a.label}</div>
+                                )}
+                                <span>{a.title}</span>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+
     return (
         <header className="header">
             <div className="header__topbar">
@@ -75,7 +213,7 @@ export default function Header() {
                     <ul className="header__quick">
                         <li><Link to="/">Mới nhất</Link></li>
                         <li><a href="#">Đọc nhiều</a></li>
-                        <li><a href="#">Video</a></li>
+                        <li><Link to="/video">Video</Link></li>
                         <li><a href="#">Liên hệ</a></li>
                     </ul>
                 </div>
@@ -125,8 +263,7 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* Thanh chuyên mục + mega menu */}
-            <div className="header__navwrap">
+            <div className="header__navwrap" onMouseLeave={() => setHoverSlug(null)}>
                 <nav className="header__nav" aria-label="Chuyên mục">
                     <ul className="header__container">
                         <li>
@@ -136,35 +273,50 @@ export default function Header() {
                                 </svg>
                             </NavLink>
                         </li>
-                        {categories.slice(0, NAV_VISIBLE).map((c) => (
-                            <li key={c.slug}>
-                                <NavLink to={`/chuyen-muc/${c.slug}`} className={activeClass} onClick={closeMenu}>
-                                    {c.name}
+                        {NAV_ENTRIES.slice(0, NAV_VISIBLE).map((e) => (
+                            <li
+                                key={e.slug}
+                                className={hoverSlug === e.slug ? 'is-hover' : ''}
+                                onMouseEnter={() => setHoverSlug(e.slug)}
+                                onFocus={() => setHoverSlug(e.slug)}
+                            >
+                                <NavLink to={e.to} className={activeClass} onClick={closeMenu}>
+                                    {e.name}
                                 </NavLink>
                             </li>
                         ))}
-                        <li className="header__nav-extra">
-                            <button
-                                className="header__menu-btn"
-                                onClick={() => setMenuOpen((v) => !v)}
-                                aria-expanded={menuOpen}
-                                aria-controls="mega-menu"
-                            >
-                                {menuOpen ? 'Đóng' : 'Menu'}
-                            </button>
-                        </li>
+                        {NAV_ENTRIES.length > NAV_VISIBLE && (
+                            <li className="header__nav-extra">
+                                <button
+                                    className="header__menu-btn"
+                                    onClick={() => setMenuOpen((v) => !v)}
+                                    aria-expanded={menuOpen}
+                                    aria-controls="mega-menu"
+                                >
+                                    {menuOpen ? 'Đóng' : 'Menu'}
+                                </button>
+                            </li>
+                        )}
                     </ul>
                 </nav>
-
+                {!menuOpen && renderHover()}
                 {menuOpen && (
                     <div className="header__mega" id="mega-menu">
                         <div className="header__container header__mega-inner">
-                            {categories.map((c) => (
-                                <Link key={c.slug} to={`/chuyen-muc/${c.slug}`} onClick={closeMenu}>
-                                    {c.name}
+                            {NAV_ENTRIES.map((e) => (
+                                <Link
+                                    key={e.slug}
+                                    to={e.to}
+                                    className={hoverSlug === e.slug ? 'is-hover' : ''}
+                                    onMouseEnter={() => setHoverSlug(e.slug)}
+                                    onFocus={() => setHoverSlug(e.slug)}
+                                    onClick={closeMenu}
+                                >
+                                    {e.name}
                                 </Link>
                             ))}
                         </div>
+                        {renderHover(true)}
                     </div>
                 )}
             </div>

@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react'
+import {Fragment, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { allArticles } from '../../data/allArticles'
+import { api, useApi } from '../../api'
 import { categories } from '../../data/categories'
 import ArticleCard from '../../components/article/ArticleCard'
+import AdSlot from '../../components/ads/AdSlot'
 import './ArticleDetailPage.css'
 
 export default function ArticleDetailPage() {
     const { slug } = useParams()
-    const article = allArticles.find((item) => item.slug === slug)
+    const articleState = useApi(api.getArticleBySlug, slug)
+    const relatedState = useApi(api.getRelatedArticles, slug)
+    const article = articleState.data
+    const relatedArticles = relatedState.data ?? []
     const [progress, setProgress] = useState(0)
 
     useEffect(() => {
@@ -24,6 +28,24 @@ export default function ArticleDetailPage() {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
+    if (articleState.loading) {
+        return (
+            <section className="article-detail article-detail--not-found">
+                <p role="status" aria-busy="true">Đang tải bài viết…</p>
+            </section>
+        )
+    }
+
+    if (articleState.error && articleState.error.status !== 404) {
+        return (
+            <section className="article-detail article-detail--not-found">
+                <h1>Không thể tải bài viết</h1>
+                <p role="alert">{articleState.error.message || 'Đã có lỗi xảy ra.'}</p>
+                <button type="button" onClick={articleState.refetch}>Thử lại</button>
+            </section>
+        )
+    }
+
     if (!article) {
         return (
             <section className="article-detail article-detail--not-found">
@@ -37,9 +59,6 @@ export default function ArticleDetailPage() {
     const category = categories.find((item) => item.slug === article.categorySlug)
     const categoryName = category?.name ?? article.category
     const categoryPath = `/chuyen-muc/${article.categorySlug}`
-    const relatedArticles = allArticles
-        .filter((item) => item.categorySlug === article.categorySlug && item.slug !== article.slug)
-        .slice(0, 3)
 
     return (
         <article className="article-detail">
@@ -76,7 +95,10 @@ export default function ArticleDetailPage() {
                 <div className="article-detail__layout">
                     <div className="article-detail__body">
                         {article.content.map((paragraph, index) => (
-                            <p key={`${article.slug}-${index}`}>{paragraph}</p>
+                            <Fragment key={`${article.slug}-${index}`}>
+                                <p>{paragraph}</p>
+                                {index === 1 && article.content.length > 3 && <AdSlot slot="leaderboard" index={2} />}
+                            </Fragment>
                         ))}
                     </div>
 

@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import {Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ArticleCard from '../../components/article/ArticleCard'
+import AdSlot from '../../components/ads/AdSlot'
 import { api, useApi } from '../../api'
 import '../educationPage/EducationPage.css'
 import './HomePage.css'
@@ -198,8 +199,11 @@ export default function HomePage() {
                             <LatestList initial={data.latest} excludeSlugs={data.usedSlugs} />
                             <MostRead items={data.mostRead} />
                         </div>
-                        {data.sections.map((s) => (
-                            <CategorySection key={s.category.slug} category={s.category} articles={s.articles} />
+                        {data.sections.map((s,i) => (
+                            <Fragment key={s.category.slug}>
+                                <CategorySection category={s.category} articles={s.articles} />
+                                {i === 1 && <AdSlot slot="leaderboard" index={1} />}
+                            </Fragment>
                         ))}
                     </>
                 )}

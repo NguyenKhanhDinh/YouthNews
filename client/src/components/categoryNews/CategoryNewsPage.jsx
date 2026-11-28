@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ArticleCard from '../article/ArticleCard'
+import AdSlot from '../ads/AdSlot'
 import './CategoryNewsPage.css'
 
 export default function CategoryNewsPage({ name, eyebrow, intro, topics, articles }) {
@@ -136,6 +137,7 @@ export default function CategoryNewsPage({ name, eyebrow, intro, topics, article
                             ))}
                         </ol>
                     </aside>
+                    <AdSlot slot="rectangle" index={1} />
                 </div>
             </div>
         </div>

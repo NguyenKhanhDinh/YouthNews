@@ -67,6 +67,15 @@ export default function Footer() {
                                 <Link to={`/chuyen-muc/${c.slug}`}>{c.name}</Link>
                             </li>
                         ))}
+                        <li>
+                            <Link to="/video">Video</Link>
+                        </li>
+                        <li>
+                            <Link to="/podcast">Podcast</Link>
+                        </li>
+                        <li>
+                            <Link to="/magazine">Magazine</Link>
+                        </li>
                     </ul>
                 </nav>
 
