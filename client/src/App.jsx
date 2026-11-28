@@ -10,6 +10,9 @@ import ArticleDetailPage from './pages/articleDetailPage/ArticleDetailPage'
 import SavedArticlesPage from './pages/SavedArticlesPage'
 import ForgotPassword from './pages/ForgotPassword'
 import NotFoundPage from './pages/notFoundPage/NotFoundPage'
+import InfoPage from './pages/infoPage/InfoPage'
+import ContactPage from './pages/infoPage/ContactPage'
+import { infoPages } from './data/infoPages'
 import VideoPage from './pages/videoPage/VideoPage'
 import VideoDetailPage from './pages/videoPage/VideoDetailPage'
 import PodcastPage from "./pages/podcastPage/PodcastPage.jsx";
@@ -42,6 +45,10 @@ function App() {
                         <Route path="/dang-nhap" element={<Login />} />
                         <Route path="/dang-ky" element={<Register />} />
                     </Route>
+                    <Route path="/lien-he" element={<ContactPage />} />
+                    {infoPages.map((p) => (
+                        <Route key={p.path} path={`/${p.path}`} element={<InfoPage page={p} />} />
+                    ))}
                     <Route path="/quen-mat-khau" element={<ForgotPassword />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
