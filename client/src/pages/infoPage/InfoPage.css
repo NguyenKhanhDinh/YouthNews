@@ -1,0 +1,54 @@
+.info-page { max-width: 820px; }
+.info-page h1 { margin: 4px 0 8px; font-size: 32px; color: var(--yn-text); }
+.info-page__intro { margin: 0 0 28px; color: var(--yn-muted); font-size: 17px; line-height: 1.6; }
+
+.info-page__section { margin-bottom: 26px; }
+.info-page__section h2 { margin: 0 0 10px; font-size: 21px; color: var(--yn-text); }
+.info-page__section p { margin: 0 0 10px; line-height: 1.75; color: var(--yn-text); }
+.info-page__section ul { margin: 0; padding-left: 20px; color: var(--yn-text); line-height: 1.75; }
+
+.info-contact { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 32px; }
+.info-contact__side h2 { margin: 0 0 10px; font-size: 18px; color: var(--yn-text); }
+.info-contact__side p { margin: 0 0 8px; color: var(--yn-text); line-height: 1.6; }
+.info-contact__side a { color: var(--yn-primary); }
+
+.info-form { display: flex; flex-direction: column; gap: 16px; }
+.info-form__field { display: flex; flex-direction: column; gap: 6px; }
+.info-form label { font-weight: 600; color: var(--yn-text); }
+
+.info-form input,
+.info-form textarea {
+    padding: 10px 12px;
+    border: 1px solid var(--yn-border-strong);
+    border-radius: var(--yn-radius);
+    background: var(--yn-surface);
+    color: var(--yn-text);
+    font: inherit;
+}
+
+.info-form input[aria-invalid='true'],
+.info-form textarea[aria-invalid='true'] { border-color: var(--yn-primary); }
+
+.info-form input:focus-visible,
+.info-form textarea:focus-visible,
+.info-form button:focus-visible { outline: 2px solid var(--yn-primary); outline-offset: 2px; }
+
+.info-form button {
+    align-self: flex-start;
+    padding: 10px 22px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--yn-primary);
+    color: var(--yn-on-primary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.info-form button:disabled { opacity: 0.6; cursor: default; }
+.info-form__error { margin: 0; color: var(--yn-primary); font-size: 14px; }
+.info-form__ok { margin: 0; color: var(--yn-text); font-weight: 600; }
+
+@media (max-width: 800px) {
+    .info-contact { grid-template-columns: 1fr; }
+    .info-page h1 { font-size: 26px; }
+}
