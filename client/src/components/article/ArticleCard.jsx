@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
+import Highlight from '../highlight/Highlight'
 
-export default function ArticleCard({ article }) {
+export default function ArticleCard({ article, highlight = '' }) {
     return (
         <article className="article-card">
             <Link className="article-card__image" to={`/bai-viet/${article.slug}`}>
@@ -9,9 +10,13 @@ export default function ArticleCard({ article }) {
             <div className="article-card__content">
                 <span className="education-label">{article.category}</span>
                 <h3>
-                    <Link to={`/bai-viet/${article.slug}`}>{article.title}</Link>
+                    <Link to={`/bai-viet/${article.slug}`}>
+                        <Highlight text={article.title} keyword={highlight} />
+                    </Link>
                 </h3>
-                <p>{article.summary}</p>
+                <p>
+                    <Highlight text={article.summary} keyword={highlight} />
+                </p>
                 <time className="education-meta">{article.date}</time>
             </div>
         </article>

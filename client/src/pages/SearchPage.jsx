@@ -7,12 +7,13 @@ import { addSearchHistory, clearSearchHistory, getSearchHistory } from '../utils
 import './educationPage/EducationPage.css'
 
 export default function SearchPage() {
-    const [searchParams] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
     const navigate = useNavigate()
     const query = searchParams.get('q')?.trim() ?? ''
+    const sort = searchParams.get('sort') === 'views' ? 'views' : 'latest'
     const [keyword, setKeyword] = useState(query)
 
-    const { data, loading, error, refetch } = useApi(api.searchArticles, { q: query, limit: 100 })
+    const { data, loading, error, refetch } = useApi(api.searchArticles, { q: query, sort, limit: 100 })
     const results = data?.items ?? []
 
     useDocumentTitle(query ? `Tìm kiếm: ${query}` : 'Tìm kiếm')
@@ -30,6 +31,11 @@ export default function SearchPage() {
     const handleClearHistory = () => {
         clearSearchHistory()
         setHistoryVersion((version) => version + 1)
+    }
+
+    const handleSortChange = (e) => {
+        const value = e.target.value
+        setSearchParams(value === 'views' ? { q: query, sort: value } : { q: query })
     }
 
     const handleSubmit = (e) => {
@@ -70,6 +76,16 @@ export default function SearchPage() {
                     <p className="education-page__intro" aria-live="polite">
                         Từ khóa “{query}” · {data.total} kết quả
                     </p>
+                )}
+
+                {query && !error && data?.total !== 0 && (
+                    <div className="search-page__sort">
+                        <label htmlFor="search-sort">Sắp xếp:</label>
+                        <select id="search-sort" value={sort} onChange={handleSortChange}>
+                            <option value="latest">Mới nhất</option>
+                            <option value="views">Đọc nhiều nhất</option>
+                        </select>
+                    </div>
                 )}
 
                 {!query ? (
@@ -114,7 +130,7 @@ export default function SearchPage() {
                 ) : results.length > 0 ? (
                     <div className="article-list">
                         {results.map((article) => (
-                            <ArticleCard article={article} key={article.slug} />
+                            <ArticleCard article={article} highlight={query} key={article.slug} />
                         ))}
                     </div>
                 ) : (

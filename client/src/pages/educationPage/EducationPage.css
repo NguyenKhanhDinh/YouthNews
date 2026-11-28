@@ -444,6 +444,8 @@
     .education-popular {
         padding: 16px;
     }
+}
+
 .search-page__form {
     display: flex;
     gap: 10px;
@@ -499,7 +501,6 @@
     font-size: 14px !important;
     opacity: 0.85;
 }
-}
 
 .search-page__history {
     margin-top: 20px;
@@ -548,4 +549,29 @@
 
 .search-page__history-clear:hover {
     text-decoration: underline;
+}
+
+.search-page__sort {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 16px;
+    font-size: 14px;
+    color: var(--yn-muted);
+}
+
+.search-page__sort select {
+    padding: 6px 10px;
+    border: 1px solid var(--yn-border);
+    border-radius: 8px;
+    color: var(--yn-text);
+    font: inherit;
+    background: var(--yn-surface);
+}
+
+.highlight {
+    padding: 0 2px;
+    border-radius: 2px;
+    color: inherit;
+    background: #fff3a3;
 }
