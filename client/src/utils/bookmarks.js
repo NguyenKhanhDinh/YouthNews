@@ -45,3 +45,21 @@ export function toggleSavedArticle(slug) {
 
     return !isSaved
 }
+
+export function removeSavedArticle(slug) {
+    const updatedSlugs = readSlugs().filter((item) => item !== slug)
+
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSlugs))
+    } catch (error) {
+        throw new Error('Không thể bỏ lưu bài viết trên thiết bị.', { cause: error })
+    }
+}
+
+export function clearSavedArticles() {
+    try {
+        localStorage.removeItem(STORAGE_KEY)
+    } catch (error) {
+        throw new Error('Không thể xóa danh sách tin đã lưu trên thiết bị.', { cause: error })
+    }
+}

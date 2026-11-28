@@ -54,3 +54,50 @@
     background: transparent;
     cursor: pointer;
 }
+
+.saved-articles__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 8px;
+}
+
+.saved-articles__toolbar .saved-articles__count {
+    margin: 0;
+}
+
+.saved-articles__clear,
+.saved-articles__remove {
+    padding: 0;
+    border: 0;
+    color: var(--yn-primary);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    background: transparent;
+    cursor: pointer;
+}
+
+.saved-articles__clear:hover,
+.saved-articles__remove:hover {
+    text-decoration: underline;
+}
+
+.saved-articles__item {
+    display: grid;
+    justify-items: end;
+    gap: 4px;
+}
+
+.saved-articles__item .article-card {
+    width: 100%;
+}
+
+.saved-articles__action-error {
+    margin: 0 0 12px;
+    padding: 12px 16px;
+    border: 1px solid var(--yn-border);
+    color: var(--yn-text);
+    background: var(--yn-surface);
+}
