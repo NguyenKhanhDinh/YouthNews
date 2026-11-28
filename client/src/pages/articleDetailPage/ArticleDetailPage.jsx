@@ -2,6 +2,7 @@ import {Fragment, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { api, useApi } from '../../api'
 import { categories } from '../../data/categories'
+import { slugify } from '../../data/seed'
 import ArticleCard from '../../components/article/ArticleCard'
 import AdSlot from '../../components/ads/AdSlot'
 import './ArticleDetailPage.css'
@@ -59,6 +60,7 @@ export default function ArticleDetailPage() {
     const category = categories.find((item) => item.slug === article.categorySlug)
     const categoryName = category?.name ?? article.category
     const categoryPath = `/chuyen-muc/${article.categorySlug}`
+    const tags = [...new Set(article.tags ?? [])]
 
     return (
         <article className="article-detail">
@@ -100,6 +102,22 @@ export default function ArticleDetailPage() {
                                 {index === 1 && article.content.length > 3 && <AdSlot slot="leaderboard" index={2} />}
                             </Fragment>
                         ))}
+                        {tags.length > 0 && (
+                            <nav className="article-detail__tags" aria-label="Chủ đề bài viết">
+                                <span className="article-detail__tags-label">Chủ đề:</span>
+                                {tags.map((tag) => (
+                                    <Link
+                                        className="article-detail__tag"
+                                        key={tag}
+                                        to={tag === article.category
+                                            ? `${categoryPath}/${slugify(tag)}`
+                                            : categoryPath}
+                                    >
+                                        {tag}
+                                    </Link>
+                                ))}
+                            </nav>
+                        )}
                     </div>
 
                     {relatedArticles.length > 0 && (
