@@ -1,17 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import ArticleCard from '../components/article/ArticleCard'
 import { api, useApi } from '../api'
+import useDocumentTitle from '../hooks/useDocumentTitle'
+import { addSearchHistory, clearSearchHistory, getSearchHistory } from '../utils/searchHistory'
 import './educationPage/EducationPage.css'
 
 export default function SearchPage() {
-    const [searchParams] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
     const navigate = useNavigate()
     const query = searchParams.get('q')?.trim() ?? ''
+    const sort = searchParams.get('sort') === 'views' ? 'views' : 'latest'
     const [keyword, setKeyword] = useState(query)
 
-    const { data, loading, error, refetch } = useApi(api.searchArticles, { q: query, limit: 100 })
+    const { data, loading, error, refetch } = useApi(api.searchArticles, { q: query, sort, limit: 100 })
     const results = data?.items ?? []
+
+    useDocumentTitle(query ? `Tìm kiếm: ${query}` : 'Tìm kiếm')
+
+    const [historyVersion, setHistoryVersion] = useState(0)
+    const history = useMemo(
+        () => (query ? [] : getSearchHistory()),
+        [query, historyVersion],
+    )
+
+    useEffect(() => {
+        if (query) addSearchHistory(query)
+    }, [query])
+
+    const handleClearHistory = () => {
+        clearSearchHistory()
+        setHistoryVersion((version) => version + 1)
+    }
+
+    const handleSortChange = (e) => {
+        const value = e.target.value
+        setSearchParams(value === 'views' ? { q: query, sort: value } : { q: query })
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -53,12 +78,45 @@ export default function SearchPage() {
                     </p>
                 )}
 
+                {query && !error && data?.total !== 0 && (
+                    <div className="search-page__sort">
+                        <label htmlFor="search-sort">Sắp xếp:</label>
+                        <select id="search-sort" value={sort} onChange={handleSortChange}>
+                            <option value="latest">Mới nhất</option>
+                            <option value="views">Đọc nhiều nhất</option>
+                        </select>
+                    </div>
+                )}
+
                 {!query ? (
                     <div className="search-page__empty" role="status">
                         <p>Vui lòng nhập từ khóa vào ô tìm kiếm phía trên.</p>
                         <p className="search-page__hint">
                             Gợi ý: tuyển sinh, đại học, học bổng, kỳ thi...
                         </p>
+                        {history.length > 0 && (
+                            <div className="search-page__history">
+                                <p className="search-page__history-title">Tìm kiếm gần đây</p>
+                                <div className="search-page__history-list">
+                                    {history.map((item) => (
+                                        <Link
+                                            className="search-page__chip"
+                                            key={item}
+                                            to={`/tim-kiem?q=${encodeURIComponent(item)}`}
+                                        >
+                                            {item}
+                                        </Link>
+                                    ))}
+                                </div>
+                                <button
+                                    className="search-page__history-clear"
+                                    type="button"
+                                    onClick={handleClearHistory}
+                                >
+                                    Xóa lịch sử
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ) : loading ? (
                     <div className="search-page__empty" role="status" aria-busy="true">
@@ -72,7 +130,7 @@ export default function SearchPage() {
                 ) : results.length > 0 ? (
                     <div className="article-list">
                         {results.map((article) => (
-                            <ArticleCard article={article} key={article.slug} />
+                            <ArticleCard article={article} highlight={query} key={article.slug} />
                         ))}
                     </div>
                 ) : (

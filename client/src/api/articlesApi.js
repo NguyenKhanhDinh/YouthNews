@@ -92,14 +92,14 @@ export function getMostRead(limit = 5) {
     return request(() => byViewsDesc(allArticles).slice(0, limit))
 }
 
-export function searchArticles({ q = '', page = 1, limit = 10 } = {}) {
+export function searchArticles({ q = '', sort = 'latest', page = 1, limit = 10 } = {}) {
     return request(() => {
         const keyword = normalize(q.trim())
         if (!keyword) return paginate([], page, limit)
         const matched = allArticles.filter((a) =>
             [a.title, a.summary, a.category, ...a.tags].some((v) => normalize(v).includes(keyword)),
         )
-        return paginate(byDateDesc(matched), page, limit)
+        return paginate(sort === 'views' ? byViewsDesc(matched) : byDateDesc(matched), page, limit)
     })
 }
 

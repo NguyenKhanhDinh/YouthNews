@@ -2,25 +2,53 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api, useApi } from '../api'
 import ArticleCard from '../components/article/ArticleCard'
-import { getSavedArticleSlugs } from '../utils/bookmarks'
+import { clearSavedArticles, getSavedArticleSlugs, removeSavedArticle } from '../utils/bookmarks'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import './educationPage/EducationPage.css'
 import './SavedArticlesPage.css'
 
 export default function SavedArticlesPage() {
-    const [{ savedSlugs, bookmarkError }] = useState(() => {
+    const [{ savedSlugs, bookmarkError }, setBookmarkState] = useState(() => {
         try {
             return { savedSlugs: getSavedArticleSlugs(), bookmarkError: null }
         } catch (error) {
             return { savedSlugs: [], bookmarkError: error }
         }
     })
+    const [actionError, setActionError] = useState(null)
     const articlesState = useApi(api.getArticles, { page: 1, limit: 100 })
+
+    useDocumentTitle('Tin đã lưu')
 
     const loading = articlesState.loading
     const error = bookmarkError || articlesState.error
     const savedArticles = !loading && !error
         ? articlesState.data.items.filter((article) => savedSlugs.includes(article.slug))
         : []
+
+    const handleRemove = (slug) => {
+        try {
+            removeSavedArticle(slug)
+            setBookmarkState((current) => ({
+                ...current,
+                savedSlugs: current.savedSlugs.filter((item) => item !== slug),
+            }))
+            setActionError(null)
+        } catch (removeError) {
+            setActionError(removeError)
+        }
+    }
+
+    const handleClearAll = () => {
+        if (!window.confirm('Bạn có chắc muốn xóa tất cả tin đã lưu?')) return
+        try {
+            clearSavedArticles()
+            setBookmarkState((current) => ({ ...current, savedSlugs: [] }))
+            setActionError(null)
+        } catch (clearError) {
+            setActionError(clearError)
+        }
+    }
 
     return (
         <div className="education-page saved-articles">
@@ -52,12 +80,35 @@ export default function SavedArticlesPage() {
                     </div>
                 ) : savedArticles.length > 0 ? (
                     <>
-                        <p className="saved-articles__count" aria-live="polite">
-                            {savedArticles.length} bài viết
-                        </p>
+                        <div className="saved-articles__toolbar">
+                            <p className="saved-articles__count" aria-live="polite">
+                                {savedArticles.length} bài viết
+                            </p>
+                            <button
+                                className="saved-articles__clear"
+                                type="button"
+                                onClick={handleClearAll}
+                            >
+                                Xóa tất cả
+                            </button>
+                        </div>
+                        {actionError && (
+                            <p className="saved-articles__action-error" role="alert">
+                                {actionError.message}
+                            </p>
+                        )}
                         <div className="article-list">
                             {savedArticles.map((article) => (
-                                <ArticleCard article={article} key={article.slug} />
+                                <div className="saved-articles__item" key={article.slug}>
+                                    <ArticleCard article={article} />
+                                    <button
+                                        className="saved-articles__remove"
+                                        type="button"
+                                        onClick={() => handleRemove(article.slug)}
+                                    >
+                                        Bỏ lưu
+                                    </button>
+                                </div>
                             ))}
                         </div>
                     </>
